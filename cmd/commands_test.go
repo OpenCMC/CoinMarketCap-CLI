@@ -99,7 +99,7 @@ func TestCommands_ResolveCatalog_UsesSplitEndpoints(t *testing.T) {
 	require.NotEmpty(t, resolveEntry.OASOperationIDs)
 	require.Equal(t, "getV2CryptocurrencyInfo", resolveEntry.OASOperationIDs["id"])
 	require.Equal(t, "getV2CryptocurrencyInfo", resolveEntry.OASOperationIDs["slug"])
-	require.Equal(t, "cryptocurrency-map", resolveEntry.OASOperationIDs["symbol"])
+	require.Equal(t, "getV1CryptocurrencyMap", resolveEntry.OASOperationIDs["symbol"])
 }
 
 func TestCommands_SearchCatalog_UsesAddressEndpoints(t *testing.T) {
@@ -158,13 +158,14 @@ func TestCommands_CatalogExcludesHiddenAndShellCommands(t *testing.T) {
 	}
 }
 
-func TestCommands_CatalogExcludesDEXCommands(t *testing.T) {
+func TestCommands_CatalogListsDEXSubcommandsOnly(t *testing.T) {
 	cat := parseCommandsJSONCatalog(t)
 
 	for _, c := range cat.Commands {
-		require.NotEqual(t, "dex", c.Name, "catalog must not include top-level dex command")
-		require.False(t, strings.HasPrefix(c.Name, "dex "), "catalog must not include any dex subcommand, found %q", c.Name)
+		require.NotEqual(t, "dex", c.Name, "catalog lists dex subcommands, not the dex group itself")
 	}
+	assert.Equal(t, "/v4/dex/spot-pairs/latest", commandInfoByName(t, cat, "dex pairs").APIEndpoint)
+	assert.Equal(t, "/v4/dex/pairs/quotes/latest", commandInfoByName(t, cat, "dex pair").APIEndpoint)
 }
 
 func TestCommands_VersionEntry_OutputFormats_TableThenJSON(t *testing.T) {

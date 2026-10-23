@@ -20,7 +20,14 @@ If you need repeatable inspection, bulk pulls, or agent workflows that stay clos
 
 ## Try This First
 
-These three commands show the core value quickly:
+No API key needed for these; they run on the Keyless Public API (see [Keyless mode](#keyless-mode)):
+
+```sh
+cmc price --id 1,1027
+cmc api /v3/fear-and-greed/latest
+```
+
+These three show the core value quickly. All but `--with-chain-stats` also work without a key:
 
 ```sh
 # Stable identity resolution
@@ -69,7 +76,19 @@ mv "$(go env GOPATH)/bin/coinmarketcap-cli" "$(go env GOPATH)/bin/cmc"
 
 `go install` names the binary after the module (`coinmarketcap-cli`), so the rename keeps it consistent with every other install method.
 
+## Keyless mode
+
+With no key configured (no config file and no `CMC_API_KEY`), `cmc` calls the [Keyless Public API](https://coinmarketcap.com/api/documentation/pro-api-reference/keyless-public-api) at `https://pro-api.coinmarketcap.com/public-api` and sends no key header. Output has the same fields and shape with or without a key, so scripts keep working when you add one later.
+
+Works keyless: `price` (without `--with-chain-stats`), `markets`, `metrics`, `resolve`, `search`, `monitor`, `dex pair`, `dex pairs`, and every endpoint `cmc api --list --keyless` shows.
+
+Needs a free key: `trending`, `top-gainers-losers`, `history`, `news`, `pairs`, and `price --with-chain-stats`. Without a key they stop before calling the API and tell you to run `cmc auth`; with `-o json` the error is `{"error":"api_key_required",...}` on stderr.
+
+Keyless requests share an IP-based rate limit. `cmc` retries a `429` with exponential backoff (1s, 2s, 4s, 8s) and then suggests a key. `monitor` polls at most every 30s keyless. `cmc status` shows `"mode": "keyless"`. A key that is set but invalid fails with an auth error; it never falls back to keyless.
+
 ## Authenticate
+
+A free key raises the rate limits and unlocks every endpoint. Get one at https://coinmarketcap.com/api/pricing/.
 
 ```sh
 # Interactive prompt
@@ -86,7 +105,7 @@ CMC_API_KEY=your-key cmc price --id 1 -o json
 cmc auth --key your-key
 ```
 
-Config is stored in your OS user config directory. Run `cmc status` to see the active tier, masked key, base URL, and exact config path.
+Config is stored in your OS user config directory. Run `cmc status` to see the mode (`keyless` or `api_key`), active tier, masked key, base URL, and exact config path.
 
 ## Using cmc with AI agents
 
@@ -137,6 +156,30 @@ cmc markets --total 250 --export top250.csv
 cmc pairs 1
 cmc pairs 1027 --category derivatives --limit 50 -o table
 ```
+
+### Call any endpoint in the spec
+
+`cmc api` calls any endpoint in the published [OpenAPI spec](https://coinmarketcap.com/api/documentation/openapi.json) by path or operationId and prints the response unchanged, so new fields show up without a CLI release. Required parameters are checked against the spec; unknown parameters and enum values only warn, so parameters added after a release still work.
+
+```sh
+cmc api --list -o table                 # every endpoint, with keyless and tag columns
+cmc api --list --keyless -o table       # the ones that work without a key
+cmc api --list real-world-assets        # filter by path, operationId or summary
+cmc api /v3/fear-and-greed/latest
+cmc api getV1AltcoinSeasonIndexHistorical -p timeframe=30d
+cmc api /v3/index/cmc20-latest -o table
+cmc api /v1/dex/holders/list --body '{"platform":"ethereum","tokenAddress":"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48","tag":"tag_all"}'
+cmc api /v5/real-world-assets/map -p limit=5 --dry-run
+```
+
+### Look up DEX pairs
+
+```sh
+cmc dex pair --network ethereum --pair 0x11b815efb8f581194ae79006d24e0d814b7697f6
+cmc dex pairs --network ethereum --dex-slug uniswap-v3 --limit 10 -o table
+```
+
+`--network` takes a slug (`ethereum`) or a numeric network id. `dex pairs` needs `--dex-slug` or `--dex-id`.
 
 ### Pull history, news, and trend data
 
@@ -199,6 +242,7 @@ cmc tui trending
 
 ## Notes
 
+- The CLI embeds an operation index generated from the published OpenAPI spec (`internal/spec/operations.json`). `cmc commands` reads operation IDs and `requires_auth` from it. Regenerate it with `make spec`; never edit it by hand.
 - Supported tiers: `basic`, `hobbyist`, `startup`, `standard`, `professional`, `enterprise`.
 - Some endpoints and intervals are tier-gated by CoinMarketCap plan, especially historical 5-minute and hourly data.
 - `cmc version` shows build version and commit metadata.

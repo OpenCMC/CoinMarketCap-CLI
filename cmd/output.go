@@ -85,6 +85,9 @@ func classifyError(err error) CLIError {
 	if errors.Is(err, api.ErrInvalidAPIKey) {
 		return CLIError{Error: "invalid_api_key", Message: err.Error()}
 	}
+	if errors.Is(err, api.ErrKeyRequired) {
+		return CLIError{Error: "api_key_required", Message: err.Error()}
+	}
 	if errors.Is(err, api.ErrPlanRestricted) {
 		return CLIError{Error: "plan_restricted", Message: err.Error()}
 	}

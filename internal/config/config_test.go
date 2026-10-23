@@ -50,11 +50,24 @@ func TestIsPaid(t *testing.T) {
 }
 
 func TestBaseURL(t *testing.T) {
-	basic := &Config{Tier: "basic"}
+	basic := &Config{APIKey: "basic-key", Tier: "basic"}
 	assert.Equal(t, cmcBaseURL, basic.BaseURL())
 
-	hobbyist := &Config{Tier: "hobbyist"}
+	hobbyist := &Config{APIKey: "hobbyist-key", Tier: "hobbyist"}
 	assert.Equal(t, cmcBaseURL, hobbyist.BaseURL())
+}
+
+func TestKeylessMode(t *testing.T) {
+	keyless := &Config{}
+	assert.True(t, keyless.IsKeyless())
+	assert.Equal(t, "https://pro-api.coinmarketcap.com/public-api", keyless.BaseURL())
+
+	req, _ := http.NewRequest(http.MethodGet, keyless.BaseURL()+"/v1/global-metrics/quotes/latest", nil)
+	keyless.ApplyAuth(req)
+	assert.Empty(t, req.Header.Get("X-CMC_PRO_API_KEY"), "keyless requests must not send the key header")
+
+	keyed := &Config{APIKey: "k"}
+	assert.False(t, keyed.IsKeyless())
 }
 
 func TestAuthHeader(t *testing.T) {

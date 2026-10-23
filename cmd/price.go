@@ -10,6 +10,7 @@ import (
 	"github.com/openCMC/CoinMarketCap-CLI/internal/api"
 	"github.com/openCMC/CoinMarketCap-CLI/internal/config"
 	"github.com/openCMC/CoinMarketCap-CLI/internal/display"
+	"github.com/openCMC/CoinMarketCap-CLI/internal/spec"
 
 	"github.com/spf13/cobra"
 )
@@ -77,6 +78,9 @@ func runPrice(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+	if withChainStats && cfg.IsKeyless() {
+		return api.KeyRequired("`cmc price --with-chain-stats`")
+	}
 
 	// Short-circuit before any API calls in dry-run mode.
 	if isDryRun(cmd) {
@@ -99,7 +103,7 @@ func runPrice(cmd *cobra.Command, args []string) error {
 		}
 		if !withInfo {
 			if !withChainStats {
-				return printDryRun(cfg, "price", "/v2/cryptocurrency/quotes/latest", params, nil)
+				return printDryRun(cfg, "price", "/v3/cryptocurrency/quotes/latest", params, nil)
 			}
 		}
 		requests := []struct {
@@ -107,7 +111,7 @@ func runPrice(cmd *cobra.Command, args []string) error {
 			endpoint string
 			params   map[string]string
 		}{
-			{opKey: "explicit", endpoint: "/v2/cryptocurrency/quotes/latest", params: params},
+			{opKey: "explicit", endpoint: "/v3/cryptocurrency/quotes/latest", params: params},
 		}
 		if withInfo {
 			infoParams := map[string]string{}
@@ -351,10 +355,8 @@ func newPriceDryRunRequest(cfg *config.Config, endpoint string, params map[strin
 		Pagination: nil,
 	}
 	if withMeta {
-		if meta, ok := commandMeta["price"]; ok {
-			out.OASSpec = meta.OASSpec
-			out.OASOperationID = meta.OASOperationID
-		}
+		out.OASSpec = spec.SourceURL
+		out.OASOperationID = operationID(endpoint)
 	}
 	return out
 }
@@ -605,7 +607,7 @@ func printPricePositionalDryRunPlan(cfg *config.Config, tokens []string, convert
 	steps = append(steps, pricePositionalDryRunPlanStep{
 		Stage:     "fetch_quotes",
 		Condition: "resolved asset IDs are filled at runtime from the shorthand resolution steps",
-		Request: newPriceDryRunRequest(cfg, "/v2/cryptocurrency/quotes/latest", map[string]string{
+		Request: newPriceDryRunRequest(cfg, "/v3/cryptocurrency/quotes/latest", map[string]string{
 			"id":      "<resolved asset ids>",
 			"convert": convert,
 		}, "Final price fetch after runtime shorthand resolution.", true),
@@ -654,7 +656,7 @@ func printPriceExplicitSymbolDryRunPlan(cfg *config.Config, symbols []string, co
 	steps = append(steps, pricePositionalDryRunPlanStep{
 		Stage:     "fetch_quotes",
 		Condition: "resolved asset IDs are filled at runtime from the explicit symbol resolution step",
-		Request: newPriceDryRunRequest(cfg, "/v2/cryptocurrency/quotes/latest", map[string]string{
+		Request: newPriceDryRunRequest(cfg, "/v3/cryptocurrency/quotes/latest", map[string]string{
 			"id":      "<resolved asset ids>",
 			"convert": convert,
 		}, "Final price fetch after runtime symbol resolution.", true),

@@ -9,6 +9,7 @@ import (
 	"github.com/openCMC/CoinMarketCap-CLI/internal/api"
 	"github.com/openCMC/CoinMarketCap-CLI/internal/config"
 	"github.com/openCMC/CoinMarketCap-CLI/internal/display"
+	"github.com/openCMC/CoinMarketCap-CLI/internal/spec"
 
 	"github.com/spf13/cobra"
 )
@@ -235,8 +236,8 @@ func newPairsDryRunRequest(cfg *config.Config, endpoint string, params map[strin
 		Pagination: nil,
 	}
 	if withMeta {
-		out.OASSpec = "coinmarketcap-v1"
-		out.OASOperationID = "getV1CryptocurrencyMarketPairsLatest"
+		out.OASSpec = spec.SourceURL
+		out.OASOperationID = operationID(endpoint)
 	}
 	return out
 }

@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/openCMC/CoinMarketCap-CLI/internal/api"
+	"github.com/openCMC/CoinMarketCap-CLI/internal/spec"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -65,7 +66,7 @@ func TestPrice_MissingIDsSlugSymbol(t *testing.T) {
 
 func TestPrice_ByID_JSONOutput(t *testing.T) {
 	srv := newTestServer(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "/v2/cryptocurrency/quotes/latest", r.URL.Path)
+		assert.Equal(t, "/v3/cryptocurrency/quotes/latest", r.URL.Path)
 		assert.Equal(t, "1,1027", r.URL.Query().Get("id"))
 		assert.Equal(t, "USD", r.URL.Query().Get("convert"))
 
@@ -105,7 +106,7 @@ func TestPrice_ByID_JSONOutput(t *testing.T) {
 
 func TestPrice_BySlug_JSONOutput(t *testing.T) {
 	srv := newTestServer(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "/v2/cryptocurrency/quotes/latest", r.URL.Path)
+		assert.Equal(t, "/v3/cryptocurrency/quotes/latest", r.URL.Path)
 		assert.Equal(t, "bitcoin,ethereum", r.URL.Query().Get("slug"))
 
 		resp := api.QuotesLatestResponse{
@@ -137,7 +138,7 @@ func TestPrice_BySlug_JSONOutput(t *testing.T) {
 func TestPrice_ByID_WithInfo_JSONOutput(t *testing.T) {
 	srv := newTestServer(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case "/v2/cryptocurrency/quotes/latest":
+		case "/v3/cryptocurrency/quotes/latest":
 			assert.Equal(t, "1,1027", r.URL.Query().Get("id"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -221,7 +222,7 @@ func TestPrice_ByID_WithInfo_JSONOutput(t *testing.T) {
 func TestPrice_BySlug_WithInfo_TableOutput(t *testing.T) {
 	srv := newTestServer(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case "/v2/cryptocurrency/quotes/latest":
+		case "/v3/cryptocurrency/quotes/latest":
 			assert.Equal(t, "bitcoin,ethereum", r.URL.Query().Get("slug"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -299,7 +300,7 @@ func TestPrice_BySlug_WithInfo_TableOutput(t *testing.T) {
 func TestPrice_ByID_WithChainStats_TableOutput(t *testing.T) {
 	srv := newTestServer(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case "/v2/cryptocurrency/quotes/latest":
+		case "/v3/cryptocurrency/quotes/latest":
 			assert.Equal(t, "1", r.URL.Query().Get("id"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -357,7 +358,7 @@ func TestPrice_ByID_WithChainStats_TableOutput(t *testing.T) {
 func TestPrice_ByID_WithChainStats_JSONOutput(t *testing.T) {
 	srv := newTestServer(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case "/v2/cryptocurrency/quotes/latest":
+		case "/v3/cryptocurrency/quotes/latest":
 			assert.Equal(t, "1,1027", r.URL.Query().Get("id"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -442,7 +443,7 @@ func TestPrice_ByID_WithChainStats_JSONOutput(t *testing.T) {
 func TestPrice_ByID_WithInfoAndChainStats_JSONOutput(t *testing.T) {
 	srv := newTestServer(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case "/v2/cryptocurrency/quotes/latest":
+		case "/v3/cryptocurrency/quotes/latest":
 			assert.Equal(t, "1", r.URL.Query().Get("id"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -526,7 +527,7 @@ func TestPrice_BySymbol_JSONOutput_ReturnsRankedCandidates(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(resp)
 			return
 		}
-		if r.URL.Path == "/v2/cryptocurrency/quotes/latest" {
+		if r.URL.Path == "/v3/cryptocurrency/quotes/latest" {
 			assert.Equal(t, "1,12345", r.URL.Query().Get("id"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -599,7 +600,7 @@ func TestPrice_BySymbol_MultipleSymbols_JSONOutput(t *testing.T) {
 				t.Fatalf("unexpected resolver symbol: %s", symbol)
 			}
 		}
-		if r.URL.Path == "/v2/cryptocurrency/quotes/latest" {
+		if r.URL.Path == "/v3/cryptocurrency/quotes/latest" {
 			assert.Equal(t, "1,12345,1027", r.URL.Query().Get("id"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -635,7 +636,7 @@ func TestPrice_BySymbol_MultipleSymbols_JSONOutput(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(resp)
 			return
 		}
-		if r.URL.Path == "/v2/cryptocurrency/quotes/latest" {
+		if r.URL.Path == "/v3/cryptocurrency/quotes/latest" {
 			t.Fatalf("unexpected quotes request: %s", r.URL.RawQuery)
 		}
 		t.Fatalf("unexpected path: %s", r.URL.Path)
@@ -673,7 +674,7 @@ func TestPrice_BySymbol_JSONOutput_CapsCandidatesAt10(t *testing.T) {
 				})
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{"data": assets})
-		case "/v2/cryptocurrency/quotes/latest":
+		case "/v3/cryptocurrency/quotes/latest":
 			ids := strings.Split(r.URL.Query().Get("id"), ",")
 			require.Len(t, ids, 10)
 			assert.Equal(t, []string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}, ids)
@@ -717,7 +718,7 @@ func TestPrice_BySymbol_WithInfoAndChainStats_JSONOutput(t *testing.T) {
 					{"id": 1, "name": "Bitcoin", "symbol": "BTC", "slug": "bitcoin", "rank": 1, "is_active": 1},
 				},
 			})
-		case "/v2/cryptocurrency/quotes/latest":
+		case "/v3/cryptocurrency/quotes/latest":
 			assert.Equal(t, "1,12345", r.URL.Query().Get("id"))
 			_ = json.NewEncoder(w).Encode(api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -816,7 +817,7 @@ func TestPrice_PositionalSymbolShorthand(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(resp)
 			return
 		}
-		if r.URL.Path == "/v2/cryptocurrency/quotes/latest" {
+		if r.URL.Path == "/v3/cryptocurrency/quotes/latest" {
 			assert.Equal(t, "1", r.URL.Query().Get("id"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -873,7 +874,7 @@ func TestPrice_PositionalSymbolShorthandMultiple(t *testing.T) {
 				t.Fatalf("unexpected resolver symbol: %s", symbol)
 			}
 		}
-		if r.URL.Path == "/v2/cryptocurrency/quotes/latest" {
+		if r.URL.Path == "/v3/cryptocurrency/quotes/latest" {
 			assert.Equal(t, "1,1027", r.URL.Query().Get("id"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -926,7 +927,7 @@ func TestPrice_PositionalSymbolShorthandAmbiguousChoosesHighestRankedWithWarning
 			_ = json.NewEncoder(w).Encode(resp)
 			return
 		}
-		if r.URL.Path == "/v2/cryptocurrency/quotes/latest" {
+		if r.URL.Path == "/v3/cryptocurrency/quotes/latest" {
 			assert.Equal(t, "1", r.URL.Query().Get("id"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -960,7 +961,7 @@ func TestPrice_PositionalSymbolShorthandAmbiguousChoosesHighestRankedWithWarning
 
 func TestPrice_PositionalIDShorthand(t *testing.T) {
 	srv := newTestServer(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "/v2/cryptocurrency/quotes/latest", r.URL.Path)
+		assert.Equal(t, "/v3/cryptocurrency/quotes/latest", r.URL.Path)
 		assert.Equal(t, "1,1027", r.URL.Query().Get("id"))
 
 		resp := api.QuotesLatestResponse{
@@ -1064,7 +1065,7 @@ func TestPrice_PositionalSlugFirstBitcoin(t *testing.T) {
 					"1": map[string]any{"id": 1, "name": "Bitcoin", "symbol": "BTC", "slug": "bitcoin"},
 				},
 			})
-		case "/v2/cryptocurrency/quotes/latest":
+		case "/v3/cryptocurrency/quotes/latest":
 			assert.Equal(t, "1", r.URL.Query().Get("id"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -1106,7 +1107,7 @@ func TestPrice_PositionalSlugFirstEthereum(t *testing.T) {
 					"1027": map[string]any{"id": 1027, "name": "Ethereum", "symbol": "ETH", "slug": "ethereum"},
 				},
 			})
-		case "/v2/cryptocurrency/quotes/latest":
+		case "/v3/cryptocurrency/quotes/latest":
 			assert.Equal(t, "1027", r.URL.Query().Get("id"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -1148,7 +1149,7 @@ func TestPrice_PositionalSlugFirstUppercaseLongWord(t *testing.T) {
 					"23036": map[string]any{"id": 23036, "name": "Bittensor", "symbol": "TAO", "slug": "bittensor"},
 				},
 			})
-		case "/v2/cryptocurrency/quotes/latest":
+		case "/v3/cryptocurrency/quotes/latest":
 			assert.Equal(t, "23036", r.URL.Query().Get("id"))
 			resp := api.QuotesLatestResponse{
 				Data: map[string]api.QuoteCoin{
@@ -1209,11 +1210,11 @@ func TestPrice_DryRun_ByID(t *testing.T) {
 	assert.Equal(t, "GET", out.Method)
 	assert.Equal(t, "1", out.Params["id"])
 	assert.Equal(t, "USD", out.Params["convert"])
-	assert.Contains(t, out.URL, "/v2/cryptocurrency/quotes/latest")
+	assert.Contains(t, out.URL, "/v3/cryptocurrency/quotes/latest")
 	assert.NotEmpty(t, out.OASOperationID, "dry-run JSON must include oas_operation_id for scripting contract")
-	assert.Equal(t, "getV2CryptocurrencyQuotesLatest", out.OASOperationID)
+	assert.Equal(t, "getV3CryptocurrencyQuotesLatest", out.OASOperationID)
 	assert.NotEmpty(t, out.OASSpec, "dry-run JSON must include oas_spec for scripting contract")
-	assert.Equal(t, "coinmarketcap-v1", out.OASSpec)
+	assert.Equal(t, spec.SourceURL, out.OASSpec)
 }
 
 func TestPrice_DryRun_WithInfo_ByID(t *testing.T) {
@@ -1229,7 +1230,7 @@ func TestPrice_DryRun_WithInfo_ByID(t *testing.T) {
 	var plan []dryRunOutput
 	require.NoError(t, json.Unmarshal([]byte(stdout), &plan))
 	require.Len(t, plan, 2)
-	assert.Equal(t, "/v2/cryptocurrency/quotes/latest", plan[0].URL[len(plan[0].URL)-len("/v2/cryptocurrency/quotes/latest"):])
+	assert.Equal(t, "/v3/cryptocurrency/quotes/latest", plan[0].URL[len(plan[0].URL)-len("/v3/cryptocurrency/quotes/latest"):])
 	assert.Equal(t, "1,1027", plan[0].Params["id"])
 	assert.Equal(t, "/v2/cryptocurrency/info", plan[1].URL[len(plan[1].URL)-len("/v2/cryptocurrency/info"):])
 	assert.Equal(t, "1,1027", plan[1].Params["id"])
@@ -1254,7 +1255,7 @@ func TestPrice_DryRun_WithInfo_ExplicitSymbol(t *testing.T) {
 	assert.Contains(t, plan.Steps[0].Request.URL, "/v1/cryptocurrency/map")
 	assert.Equal(t, "BTC", plan.Steps[0].Request.Params["symbol"])
 	assert.Equal(t, "fetch_quotes", plan.Steps[1].Stage)
-	assert.Contains(t, plan.Steps[1].Request.URL, "/v2/cryptocurrency/quotes/latest")
+	assert.Contains(t, plan.Steps[1].Request.URL, "/v3/cryptocurrency/quotes/latest")
 	assert.Equal(t, "<resolved asset ids>", plan.Steps[1].Request.Params["id"])
 	assert.Equal(t, "fetch_info", plan.Steps[2].Stage)
 	assert.Contains(t, plan.Steps[2].Request.URL, "/v2/cryptocurrency/info")
@@ -1280,7 +1281,7 @@ func TestPrice_DryRun_ExplicitSymbol(t *testing.T) {
 	assert.Equal(t, "BTC", plan.Steps[0].Request.Params["symbol"])
 	assert.Contains(t, plan.Steps[0].Condition, "ranked candidates")
 	assert.Equal(t, "fetch_quotes", plan.Steps[1].Stage)
-	assert.Contains(t, plan.Steps[1].Request.URL, "/v2/cryptocurrency/quotes/latest")
+	assert.Contains(t, plan.Steps[1].Request.URL, "/v3/cryptocurrency/quotes/latest")
 	assert.Equal(t, "<resolved asset ids>", plan.Steps[1].Request.Params["id"])
 }
 
@@ -1297,7 +1298,7 @@ func TestPrice_DryRun_WithChainStats_ByID(t *testing.T) {
 	var plan []dryRunOutput
 	require.NoError(t, json.Unmarshal([]byte(stdout), &plan))
 	require.Len(t, plan, 2)
-	assert.Contains(t, plan[0].URL, "/v2/cryptocurrency/quotes/latest")
+	assert.Contains(t, plan[0].URL, "/v3/cryptocurrency/quotes/latest")
 	assert.Equal(t, "1,1027", plan[0].Params["id"])
 	assert.Contains(t, plan[1].URL, "/v1/blockchain/statistics/latest")
 	assert.Equal(t, "1,1027", plan[1].Params["id"])
@@ -1316,7 +1317,7 @@ func TestPrice_DryRun_WithInfoAndChainStats_ByID(t *testing.T) {
 	var plan []dryRunOutput
 	require.NoError(t, json.Unmarshal([]byte(stdout), &plan))
 	require.Len(t, plan, 3)
-	assert.Contains(t, plan[0].URL, "/v2/cryptocurrency/quotes/latest")
+	assert.Contains(t, plan[0].URL, "/v3/cryptocurrency/quotes/latest")
 	assert.Contains(t, plan[1].URL, "/v2/cryptocurrency/info")
 	assert.Contains(t, plan[2].URL, "/v1/blockchain/statistics/latest")
 }
@@ -1339,7 +1340,7 @@ func TestPrice_DryRun_ExplicitSymbol_WithChainStats(t *testing.T) {
 	assert.Contains(t, plan.Steps[0].Request.URL, "/v1/cryptocurrency/map")
 	assert.Equal(t, "BTC", plan.Steps[0].Request.Params["symbol"])
 	assert.Equal(t, "fetch_quotes", plan.Steps[1].Stage)
-	assert.Contains(t, plan.Steps[1].Request.URL, "/v2/cryptocurrency/quotes/latest")
+	assert.Contains(t, plan.Steps[1].Request.URL, "/v3/cryptocurrency/quotes/latest")
 	assert.Equal(t, "fetch_chain_stats", plan.Steps[2].Stage)
 	assert.Contains(t, plan.Steps[2].Request.URL, "/v1/blockchain/statistics/latest")
 	assert.Equal(t, "<resolved asset ids>", plan.Steps[2].Request.Params["id"])
@@ -1386,7 +1387,7 @@ func TestPrice_PositionalDryRun_SymbolFirstBTC_WithChainStats(t *testing.T) {
 	assert.Contains(t, plan.Steps[1].Request.URL, "/v2/cryptocurrency/info")
 	assert.Equal(t, "btc", plan.Steps[1].Request.Params["slug"])
 	assert.Equal(t, "fetch_quotes", plan.Steps[2].Stage)
-	assert.Contains(t, plan.Steps[2].Request.URL, "/v2/cryptocurrency/quotes/latest")
+	assert.Contains(t, plan.Steps[2].Request.URL, "/v3/cryptocurrency/quotes/latest")
 	assert.Equal(t, "fetch_chain_stats", plan.Steps[3].Stage)
 	assert.Contains(t, plan.Steps[3].Request.URL, "/v1/blockchain/statistics/latest")
 }
@@ -1414,7 +1415,7 @@ func TestPrice_PositionalDryRun_SlugFirstBitcoin(t *testing.T) {
 	assert.Contains(t, plan.Steps[1].Request.URL, "/v1/cryptocurrency/map")
 	assert.Equal(t, "BITCOIN", plan.Steps[1].Request.Params["symbol"])
 	assert.Equal(t, "fetch_quotes", plan.Steps[2].Stage)
-	assert.Contains(t, plan.Steps[2].Request.URL, "/v2/cryptocurrency/quotes/latest")
+	assert.Contains(t, plan.Steps[2].Request.URL, "/v3/cryptocurrency/quotes/latest")
 	assert.Equal(t, "<resolved asset ids>", plan.Steps[2].Request.Params["id"])
 	assert.Equal(t, "USD", plan.Steps[2].Request.Params["convert"])
 	assert.Equal(t, "fetch_info", plan.Steps[3].Stage)
@@ -1443,7 +1444,7 @@ func TestPrice_PositionalDryRun_SlugFirstUppercaseLongWord(t *testing.T) {
 	assert.Contains(t, plan.Steps[1].Request.URL, "/v1/cryptocurrency/map")
 	assert.Equal(t, "BITTENSOR", plan.Steps[1].Request.Params["symbol"])
 	assert.Equal(t, "fetch_quotes", plan.Steps[2].Stage)
-	assert.Contains(t, plan.Steps[2].Request.URL, "/v2/cryptocurrency/quotes/latest")
+	assert.Contains(t, plan.Steps[2].Request.URL, "/v3/cryptocurrency/quotes/latest")
 }
 
 func TestPrice_PositionalDryRun_SymbolFirstBTC(t *testing.T) {
@@ -1469,7 +1470,7 @@ func TestPrice_PositionalDryRun_SymbolFirstBTC(t *testing.T) {
 	assert.Contains(t, plan.Steps[1].Request.URL, "/v2/cryptocurrency/info")
 	assert.Equal(t, "btc", plan.Steps[1].Request.Params["slug"])
 	assert.Equal(t, "fetch_quotes", plan.Steps[2].Stage)
-	assert.Contains(t, plan.Steps[2].Request.URL, "/v2/cryptocurrency/quotes/latest")
+	assert.Contains(t, plan.Steps[2].Request.URL, "/v3/cryptocurrency/quotes/latest")
 	assert.Equal(t, "<resolved asset ids>", plan.Steps[2].Request.Params["id"])
 	assert.Equal(t, "fetch_info", plan.Steps[3].Stage)
 	assert.Contains(t, plan.Steps[3].Request.URL, "/v2/cryptocurrency/info")
@@ -1493,15 +1494,15 @@ func TestPrice_CommandsCatalogMetadata(t *testing.T) {
 		}
 	}
 	require.True(t, found, "price command should be present in catalog")
-	assert.Equal(t, "/v2/cryptocurrency/quotes/latest", info.APIEndpoint)
-	assert.Equal(t, "getV2CryptocurrencyQuotesLatest", info.OASOperationID)
+	assert.Equal(t, "/v3/cryptocurrency/quotes/latest", info.APIEndpoint)
+	assert.Equal(t, "getV3CryptocurrencyQuotesLatest", info.OASOperationID)
 	require.NotEmpty(t, info.APIEndpoints, "price command should advertise multi-step API endpoints")
-	assert.Equal(t, "/v2/cryptocurrency/quotes/latest", info.APIEndpoints["explicit"])
+	assert.Equal(t, "/v3/cryptocurrency/quotes/latest", info.APIEndpoints["explicit"])
 	assert.Equal(t, "/v2/cryptocurrency/info", info.APIEndpoints["positional_slug_first"])
 	assert.Equal(t, "/v1/cryptocurrency/map", info.APIEndpoints["positional_symbol"])
 	require.NotEmpty(t, info.OASOperationIDs, "price command should advertise multi-step OAS operation IDs")
-	assert.Equal(t, "getV2CryptocurrencyQuotesLatest", info.OASOperationIDs["explicit"])
+	assert.Equal(t, "getV3CryptocurrencyQuotesLatest", info.OASOperationIDs["explicit"])
 	assert.Equal(t, "getV2CryptocurrencyInfo", info.OASOperationIDs["positional_slug_first"])
-	assert.Equal(t, "cryptocurrency-map", info.OASOperationIDs["positional_symbol"])
+	assert.Equal(t, "getV1CryptocurrencyMap", info.OASOperationIDs["positional_symbol"])
 	assert.Contains(t, info.Examples, "cmc price --id 1,1027")
 }

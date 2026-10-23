@@ -89,7 +89,7 @@ func runMarkets(cmd *cobra.Command, args []string) error {
 		requests := buildMarketsDryRunRequests(start, limit, total, convert, sort, sortDir, category)
 		if len(requests) == 1 {
 			req := requests[0]
-			return printDryRun(cfg, "markets", "/v1/cryptocurrency/listings/latest", req, paginationForTotal(total))
+			return printDryRun(cfg, "markets", "/v3/cryptocurrency/listings/latest", req, paginationForTotal(total))
 		}
 		multi := make([]struct {
 			opKey    string
@@ -101,7 +101,7 @@ func runMarkets(cmd *cobra.Command, args []string) error {
 				opKey    string
 				endpoint string
 				params   map[string]string
-			}{endpoint: "/v1/cryptocurrency/listings/latest", params: params})
+			}{endpoint: "/v3/cryptocurrency/listings/latest", params: params})
 		}
 		return printDryRunMulti(cfg, "markets", multi)
 	}

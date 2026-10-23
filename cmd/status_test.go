@@ -32,7 +32,7 @@ func TestStatus_JSONOutputContainsTruthfulContractFields(t *testing.T) {
 	configPath := writeIsolatedConfig(t, wantKey, wantTier)
 
 	wantMasked := (&config.Config{APIKey: wantKey}).MaskedKey()
-	wantBase := (&config.Config{}).BaseURL()
+	wantBase := (&config.Config{APIKey: wantKey}).BaseURL()
 
 	stdout, stderr, err := executeCommand(t, "status", "-o", "json")
 	if err != nil {
@@ -47,11 +47,12 @@ func TestStatus_JSONOutputContainsTruthfulContractFields(t *testing.T) {
 		t.Fatalf("decode JSON: %v\nraw: %q", decErr, stdout)
 	}
 
-	for _, key := range []string{"auth_source", "configured", "tier", "api_key", "base_url", "config_path", "config_warning"} {
+	for _, key := range []string{"mode", "auth_source", "configured", "tier", "api_key", "base_url", "config_path", "config_warning"} {
 		if _, ok := got[key]; !ok {
 			t.Errorf("JSON missing key %q; got %#v", key, got)
 		}
 	}
+	require.Equal(t, "api_key", got["mode"])
 	require.Equal(t, "config", got["auth_source"])
 	require.Equal(t, true, got["configured"])
 	require.Equal(t, wantTier, got["tier"])
@@ -121,6 +122,7 @@ func TestStatus_InvalidPersistedTierSurfacesWarning(t *testing.T) {
 
 	var got map[string]any
 	require.NoError(t, json.NewDecoder(strings.NewReader(stdout)).Decode(&got))
+	require.Equal(t, "api_key", got["mode"])
 	require.Equal(t, "config", got["auth_source"])
 	require.Equal(t, true, got["configured"])
 	require.Nil(t, got["tier"])

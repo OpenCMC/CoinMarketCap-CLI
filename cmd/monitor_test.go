@@ -93,7 +93,7 @@ func TestMonitor_DryRun(t *testing.T) {
 
 	var out dryRunOutput
 	require.NoError(t, json.Unmarshal([]byte(stdout), &out))
-	assert.Contains(t, out.URL, "/v2/cryptocurrency/quotes/latest")
+	assert.Contains(t, out.URL, "/v3/cryptocurrency/quotes/latest")
 	assert.Equal(t, "1,1027", out.Params["id"])
 	assert.Equal(t, "USD", out.Params["convert"])
 	assert.Equal(t, "1m0s", out.Params["interval"])
@@ -101,7 +101,7 @@ func TestMonitor_DryRun(t *testing.T) {
 
 func TestMonitor_JSONOutput(t *testing.T) {
 	srv := newTestServer(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "/v2/cryptocurrency/quotes/latest", r.URL.Path)
+		assert.Equal(t, "/v3/cryptocurrency/quotes/latest", r.URL.Path)
 		assert.Equal(t, "1,1027", r.URL.Query().Get("id"))
 		resp := api.QuotesLatestResponse{
 			Data: map[string]api.QuoteCoin{
@@ -186,7 +186,7 @@ func TestMonitor_CommandsCatalogMetadata(t *testing.T) {
 	}
 
 	require.True(t, found)
-	assert.Equal(t, "/v2/cryptocurrency/quotes/latest", info.APIEndpoint)
+	assert.Equal(t, "/v3/cryptocurrency/quotes/latest", info.APIEndpoint)
 	assert.Equal(t, "rest", info.Transport)
 }
 

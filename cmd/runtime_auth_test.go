@@ -20,7 +20,7 @@ func TestPrice_UsesEnvOnlyRuntimeAuth(t *testing.T) {
 		if got := r.Header.Get("X-CMC_PRO_API_KEY"); got != wantKey {
 			t.Fatalf("expected runtime auth to use env API key, got %q", got)
 		}
-		if r.URL.Path != "/v2/cryptocurrency/quotes/latest" {
+		if r.URL.Path != "/v3/cryptocurrency/quotes/latest" {
 			t.Fatalf("unexpected path %s", r.URL.Path)
 		}
 		_, _ = fmt.Fprint(w, `{"data":{"1":{"id":1,"name":"Bitcoin","symbol":"BTC","slug":"bitcoin","quote":{"USD":{"price":1,"percent_change_24h":2,"volume_24h":3,"market_cap":4}}}}}`)

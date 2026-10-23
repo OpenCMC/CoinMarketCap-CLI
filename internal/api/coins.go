@@ -13,7 +13,7 @@ const categoryPageLimit = 5000
 var categoryIDPattern = regexp.MustCompile(`^[0-9a-fA-F]{24}$`)
 
 // ListingsLatest fetches paginated list of cryptocurrencies with market data (CMC).
-// https://coinmarketcap.com/api/documentation/v1/#operation/getV1CryptocurrencyListingsLatest
+// Operation getV3CryptocurrencyListingsLatest; served keyless.
 func (c *Client) ListingsLatest(ctx context.Context, start, limit int, convert, sort, sortDir string) ([]ListingCoin, error) {
 	return c.ListingsLatestWithCategory(ctx, start, limit, convert, sort, sortDir, "")
 }
@@ -43,8 +43,48 @@ func (c *Client) ListingsLatestWithCategory(ctx context.Context, start, limit in
 		params.Set("category", category)
 	}
 	var result ListingsLatestResponse
-	err := c.get(ctx, "/v1/cryptocurrency/listings/latest?"+params.Encode(), &result)
+	err := c.get(ctx, "/v3/cryptocurrency/listings/latest?"+params.Encode(), &result)
+	if err == nil && strings.EqualFold(sortDir, "asc") {
+		fixAscendingPage(result.Data, sort, convert)
+	}
 	return result.Data, err
+}
+
+// fixAscendingPage works around /v3/cryptocurrency/listings/latest returning
+// each sort_dir=asc page in descending order (the page holds the right coins,
+// reversed). It only reverses a page that comes back descending, so it is a
+// no-op once the API is fixed.
+func fixAscendingPage(coins []ListingCoin, sort, convert string) {
+	if len(coins) < 2 {
+		return
+	}
+	first, ok1 := listingSortValue(coins[0], sort, convert)
+	last, ok2 := listingSortValue(coins[len(coins)-1], sort, convert)
+	if !ok1 || !ok2 || first <= last {
+		return
+	}
+	for i, j := 0, len(coins)-1; i < j; i, j = i+1, j-1 {
+		coins[i], coins[j] = coins[j], coins[i]
+	}
+}
+
+func listingSortValue(coin ListingCoin, sort, convert string) (float64, bool) {
+	q, ok := coin.Quote[convert]
+	if !ok {
+		q, ok = coin.Quote[strings.ToUpper(convert)]
+	}
+	if !ok {
+		return 0, false
+	}
+	switch sort {
+	case "price":
+		return q.Price, true
+	case "volume_24h":
+		return q.Volume24h, true
+	case "", "market_cap":
+		return q.MarketCap, true
+	}
+	return 0, false
 }
 
 func (c *Client) CategoriesList(ctx context.Context, start, limit int) ([]CategorySummary, error) {
@@ -153,38 +193,28 @@ func normalizeCategoryToken(value string) string {
 }
 
 // QuotesLatestByID fetches current price quotes by CMC IDs (e.g. "1", "1027").
-// https://coinmarketcap.com/api/documentation/v1/#operation/getV2CryptocurrencyQuotesLatest
+// Operation getV3CryptocurrencyQuotesLatest; served keyless. Results are keyed by CMC ID.
 func (c *Client) QuotesLatestByID(ctx context.Context, ids []string, convert string) (map[string]QuoteCoin, error) {
-	params := url.Values{
-		"id":      {strings.Join(ids, ",")},
-		"convert": {convert},
-	}
-	var result QuotesLatestResponse
-	err := c.get(ctx, "/v2/cryptocurrency/quotes/latest?"+params.Encode(), &result)
-	return result.Data, err
+	return c.quotesLatest(ctx, "id", ids, convert)
 }
 
 // QuotesLatestBySlug fetches current price quotes by CMC slugs (e.g. "bitcoin", "ethereum").
-// https://coinmarketcap.com/api/documentation/v1/#operation/getV2CryptocurrencyQuotesLatest
 func (c *Client) QuotesLatestBySlug(ctx context.Context, slugs []string, convert string) (map[string]QuoteCoin, error) {
-	params := url.Values{
-		"slug":    {strings.Join(slugs, ",")},
-		"convert": {convert},
-	}
-	var result QuotesLatestResponse
-	err := c.get(ctx, "/v2/cryptocurrency/quotes/latest?"+params.Encode(), &result)
-	return result.Data, err
+	return c.quotesLatest(ctx, "slug", slugs, convert)
 }
 
 // QuotesLatestBySymbol fetches current price quotes by symbols (e.g. "BTC", "ETH").
-// https://coinmarketcap.com/api/documentation/v1/#operation/getV2CryptocurrencyQuotesLatest
 func (c *Client) QuotesLatestBySymbol(ctx context.Context, symbols []string, convert string) (map[string]QuoteCoin, error) {
+	return c.quotesLatest(ctx, "symbol", symbols, convert)
+}
+
+func (c *Client) quotesLatest(ctx context.Context, selector string, values []string, convert string) (map[string]QuoteCoin, error) {
 	params := url.Values{
-		"symbol":  {strings.Join(symbols, ",")},
+		selector:  {strings.Join(values, ",")},
 		"convert": {convert},
 	}
 	var result QuotesLatestResponse
-	err := c.get(ctx, "/v2/cryptocurrency/quotes/latest?"+params.Encode(), &result)
+	err := c.get(ctx, "/v3/cryptocurrency/quotes/latest?"+params.Encode(), &result)
 	return result.Data, err
 }
 

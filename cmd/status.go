@@ -25,10 +25,19 @@ func runStatus(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	baseURL := (&config.Config{}).BaseURL()
+	effective := runtimeCfg.Effective
+	if effective == nil {
+		effective = &config.Config{}
+	}
+	baseURL := effective.BaseURL()
+	mode := statusModeAPIKey
+	if effective.IsKeyless() {
+		mode = statusModeKeyless
+	}
 
 	if outputJSON(cmd) {
 		return printJSONRaw(statusOutput{
+			Mode:          mode,
 			AuthSource:    string(runtimeCfg.AuthSource),
 			Configured:    runtimeCfg.Configured,
 			Tier:          stringPtrOrNil(runtimeCfg),
@@ -40,6 +49,7 @@ func runStatus(cmd *cobra.Command, args []string) error {
 	}
 
 	display.PrintBanner()
+	fmt.Printf("Mode:        %s\n", mode)
 	fmt.Printf("Auth Source: %s\n", runtimeCfg.AuthSource)
 	fmt.Printf("Configured:  %t\n", runtimeCfg.Configured)
 	fmt.Printf("Tier:        %s\n", stringOrNone(runtimeCfg))
@@ -49,10 +59,20 @@ func runStatus(cmd *cobra.Command, args []string) error {
 	if runtimeCfg.Warning != "" {
 		fmt.Printf("Warning:     %s\n", runtimeCfg.Warning)
 	}
+	if mode == statusModeKeyless {
+		fmt.Println("Note:        no API key set; using the Keyless Public API. Run `cmc auth` to add a free key for higher limits and every endpoint.")
+	}
 	return nil
 }
 
+// Status modes: keyless calls /public-api with no key header.
+const (
+	statusModeKeyless = "keyless"
+	statusModeAPIKey  = "api_key"
+)
+
 type statusOutput struct {
+	Mode          string  `json:"mode"`
 	AuthSource    string  `json:"auth_source"`
 	Configured    bool    `json:"configured"`
 	Tier          *string `json:"tier"`

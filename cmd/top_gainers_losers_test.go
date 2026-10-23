@@ -330,7 +330,7 @@ func TestTopGainersLosers_CommandsCatalogMetadata(t *testing.T) {
 	}
 	require.True(t, found, "top-gainers-losers command should be present in catalog")
 	assert.Equal(t, "/v1/cryptocurrency/trending/gainers-losers", info.APIEndpoint)
-	assert.Equal(t, "getV1CryptocurrencyTrendingGainersLosers", info.OASOperationID)
+	assert.Equal(t, "getV1CryptocurrencyTrendingGainerslosers", info.OASOperationID)
 	assert.False(t, info.PaidOnly)
 
 	flags := map[string]flagInfo{}

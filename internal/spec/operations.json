@@ -1,0 +1,5149 @@
+{
+  "source": "https://coinmarketcap.com/api/documentation/openapi.json",
+  "spec_version": "3.0.3",
+  "sha256": "855b21bbfbb3ce4c91f514467e291bcf97f0a3d043df250fe6ec03fe5ed23e0b",
+  "operations": [
+    {
+      "operation_id": "getV1AltcoinSeasonIndexHistorical",
+      "method": "GET",
+      "path": "/v1/altcoin-season-index/historical",
+      "summary": "Altcoin Season Index Historical",
+      "tag": "Global Metrics",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "timeframe",
+          "type": "string",
+          "enum": [
+            "7d",
+            "30d",
+            "90d"
+          ],
+          "default": "7d",
+          "description": "Timeframe for historical data."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1AltcoinSeasonIndexLatest",
+      "method": "GET",
+      "path": "/v1/altcoin-season-index/latest",
+      "summary": "Altcoin Season Index Latest",
+      "tag": "Global Metrics",
+      "keyless": true,
+      "deprecated": false
+    },
+    {
+      "operation_id": "getV1BlockchainStatisticsLatest",
+      "method": "GET",
+      "path": "/v1/blockchain/statistics/latest",
+      "summary": "Statistics Latest",
+      "tag": "Crypto Others",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated cryptocurrency CoinMarketCap IDs to return blockchain data for."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a comma-separated list of cryptocurrency slugs."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CommunityTrendingToken",
+      "method": "GET",
+      "path": "/v1/community/trending/token",
+      "summary": "Community Trending Tokens",
+      "tag": "Community",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "5",
+          "description": "Optionally specify the number of results to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CommunityTrendingTopic",
+      "method": "GET",
+      "path": "/v1/community/trending/topic",
+      "summary": "Community Trending Topics",
+      "tag": "Community",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "5",
+          "description": "Optionally specify the number of results to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1ContentLatest",
+      "method": "GET",
+      "path": "/v1/content/latest",
+      "summary": "Content Latest",
+      "tag": "Content",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Optionally pass a comma-separated list of CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Optionally pass a comma-separated list of cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Optionally pass a comma-separated list of cryptocurrency symbols."
+        },
+        {
+          "name": "news_type",
+          "type": "string",
+          "default": "all",
+          "description": "Optionally specify a comma-separated list of supplemental data fields: `news`, `community`, or `alexandria` to filter news sources."
+        },
+        {
+          "name": "content_type",
+          "type": "string",
+          "default": "all",
+          "description": "Optionally specify a comma-separated list of supplemental data fields: `news`, `video`, or `audio` to filter news's content."
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "description": "Optionally pass a comma-separated list of categories."
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "enum": [
+            "en",
+            "zh",
+            "zh-tw",
+            "de",
+            "id",
+            "ja",
+            "ko",
+            "es",
+            "th",
+            "tr",
+            "vi",
+            "ru",
+            "fr",
+            "nl",
+            "ar",
+            "pt-br",
+            "hi",
+            "pl",
+            "uk",
+            "fil-rph",
+            "it"
+          ],
+          "default": "en",
+          "description": "Optionally pass a language code."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1ContentPostsComments",
+      "method": "GET",
+      "path": "/v1/content/posts/comments",
+      "summary": "Content Post Comments",
+      "tag": "Content",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "post_id",
+          "type": "string",
+          "required": true,
+          "description": "Required post ID."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1ContentPostsLatest",
+      "method": "GET",
+      "path": "/v1/content/posts/latest",
+      "summary": "Content Latest Posts",
+      "tag": "Content",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Optional one cryptocurrency CoinMarketCap ID."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass one cryptocurrency slug."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one cryptocurrency symbols."
+        },
+        {
+          "name": "last_score",
+          "type": "string",
+          "description": "Optional."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1ContentPostsTop",
+      "method": "GET",
+      "path": "/v1/content/posts/top",
+      "summary": "Content Top Posts",
+      "tag": "Content",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Optional one cryptocurrency CoinMarketCap ID."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass one cryptocurrency slug."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one cryptocurrency symbols."
+        },
+        {
+          "name": "last_score",
+          "type": "string",
+          "description": "Optional."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyAirdrop",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/airdrop",
+      "summary": "Airdrop",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Airdrop Unique ID."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyAirdrops",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/airdrops",
+      "summary": "Airdrops",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "enum": [
+            "ENDED",
+            "ONGOING",
+            "UPCOMING"
+          ],
+          "default": "ONGOING",
+          "description": "What status of airdrops."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Filtered airdrops by one cryptocurrency CoinMarketCap IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively filter airdrops by a cryptocurrency slug."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively filter airdrops one cryptocurrency symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyCategories",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/categories",
+      "summary": "Categories",
+      "tag": "Cryptocurrency",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Filtered categories by one or more comma-separated cryptocurrency CoinMarketCap IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively filter categories by a comma-separated list of cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively filter categories one or more comma-separated cryptocurrency symbols."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyCategory",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/category",
+      "summary": "Category",
+      "tag": "Cryptocurrency",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "The Category ID."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of coins to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of coins to return."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyInfo",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/info",
+      "summary": "Metadata v1 (deprecated)",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a comma-separated list of cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Alternatively pass in a contract address."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "false",
+          "description": "Pass `true` to relax request validation rules."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "urls,logo,description,tags,platform,date_added,notice",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyListingsHistorical",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/listings/historical",
+      "summary": "Listings Historical",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "date",
+          "type": "string",
+          "required": true,
+          "description": "date (Unix or ISO 8601) to reference day of snapshot."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "cmc_rank",
+            "name",
+            "symbol",
+            "market_cap",
+            "price",
+            "circulating_supply",
+            "total_supply",
+            "max_supply",
+            "num_market_pairs",
+            "volume_24h",
+            "percent_change_1h",
+            "percent_change_24h",
+            "percent_change_7d"
+          ],
+          "default": "cmc_rank",
+          "description": "What field to sort the list of cryptocurrencies by."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "description": "The direction in which to order cryptocurrencies against the specified sort."
+        },
+        {
+          "name": "cryptocurrency_type",
+          "type": "string",
+          "enum": [
+            "all",
+            "coins",
+            "tokens"
+          ],
+          "default": "all",
+          "description": "The type of cryptocurrency to include."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "platform,tags,date_added,circulating_supply,total_supply,max_supply,cmc_rank,num_market_pairs",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyListingsLatest",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/listings/latest",
+      "summary": "Listings Latest v1 (deprecated)",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "price_min",
+          "type": "number",
+          "description": "Optionally specify a threshold of minimum USD price to filter results by."
+        },
+        {
+          "name": "price_max",
+          "type": "number",
+          "description": "Optionally specify a threshold of maximum USD price to filter results by."
+        },
+        {
+          "name": "market_cap_min",
+          "type": "number",
+          "description": "Optionally specify a threshold of minimum market cap to filter results by."
+        },
+        {
+          "name": "market_cap_max",
+          "type": "number",
+          "description": "Optionally specify a threshold of maximum market cap to filter results by."
+        },
+        {
+          "name": "volume_24h_min",
+          "type": "number",
+          "description": "Optionally specify a threshold of minimum 24 hour USD volume to filter results by."
+        },
+        {
+          "name": "volume_24h_max",
+          "type": "number",
+          "description": "Optionally specify a threshold of maximum 24 hour USD volume to filter results by."
+        },
+        {
+          "name": "circulating_supply_min",
+          "type": "number",
+          "description": "Optionally specify a threshold of minimum circulating supply to filter results by."
+        },
+        {
+          "name": "circulating_supply_max",
+          "type": "number",
+          "description": "Optionally specify a threshold of maximum circulating supply to filter results by."
+        },
+        {
+          "name": "percent_change_24h_min",
+          "type": "number",
+          "description": "Optionally specify a threshold of minimum 24 hour percent change to filter results by."
+        },
+        {
+          "name": "percent_change_24h_max",
+          "type": "number",
+          "description": "Optionally specify a threshold of maximum 24 hour percent change to filter results by."
+        },
+        {
+          "name": "self_reported_circulating_supply_min",
+          "type": "number",
+          "description": "Optionally specify a threshold of minimum self reported circulating supply to filter results by."
+        },
+        {
+          "name": "self_reported_circulating_supply_max",
+          "type": "number",
+          "description": "Optionally specify a threshold of maximum self reported circulating supply to filter results by."
+        },
+        {
+          "name": "self_reported_market_cap_min",
+          "type": "number",
+          "description": "Optionally specify a threshold of minimum self reported market cap to filter results by."
+        },
+        {
+          "name": "self_reported_market_cap_max",
+          "type": "number",
+          "description": "Optionally specify a threshold of maximum self reported market cap to filter results by."
+        },
+        {
+          "name": "unlocked_market_cap_min",
+          "type": "number",
+          "description": "Optionally specify a threshold of minimum unlocked market cap to filter results by."
+        },
+        {
+          "name": "unlocked_market_cap_max",
+          "type": "number",
+          "description": "Optionally specify a threshold of maximum unlocked market cap to filter results by."
+        },
+        {
+          "name": "unlocked_circulating_supply_min",
+          "type": "number",
+          "description": "Optionally specify a threshold of minimum unlocked circulating supply to filter results by."
+        },
+        {
+          "name": "unlocked_circulating_supply_max",
+          "type": "number",
+          "description": "Optionally specify a threshold of maximum unlocked circulating supply to filter results by."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "name",
+            "symbol",
+            "date_added",
+            "market_cap",
+            "market_cap_strict",
+            "price",
+            "circulating_supply",
+            "total_supply",
+            "max_supply",
+            "num_market_pairs",
+            "volume_24h",
+            "percent_change_1h",
+            "percent_change_24h",
+            "percent_change_7d",
+            "market_cap_by_total_supply_strict",
+            "volume_7d",
+            "volume_30d"
+          ],
+          "default": "market_cap",
+          "description": "What field to sort the list of cryptocurrencies by."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "description": "The direction in which to order cryptocurrencies against the specified sort."
+        },
+        {
+          "name": "cryptocurrency_type",
+          "type": "string",
+          "enum": [
+            "all",
+            "coins",
+            "tokens"
+          ],
+          "default": "all",
+          "description": "The type of cryptocurrency to include."
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "enum": [
+            "all",
+            "defi",
+            "filesharing"
+          ],
+          "default": "all",
+          "description": "The tag of cryptocurrency to include."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "num_market_pairs,cmc_rank,date_added,tags,platform,max_supply,circulating_supply,total_supply",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyListingsNew",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/listings/new",
+      "summary": "Listings New",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "description": "The direction in which to order cryptocurrencies against the specified sort."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyMap",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/map",
+      "summary": "Cryptocurrency ID Map",
+      "tag": "Cryptocurrency",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "listing_status",
+          "type": "string",
+          "default": "active",
+          "description": "Only active cryptocurrencies are returned by default."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "cmc_rank",
+            "id"
+          ],
+          "default": "id",
+          "description": "What field to sort the list of cryptocurrencies by."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Optionally pass a comma-separated list of cryptocurrency symbols to return CoinMarketCap IDs for."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "platform,first_historical_data,last_historical_data,is_active",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyMarketpairsLatest",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/market-pairs/latest",
+      "summary": "Market Pairs Latest v1 (deprecated)",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "A cryptocurrency or fiat currency by CoinMarketCap ID to list market pairs for."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a cryptocurrency by slug."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass a cryptocurrency by symbol."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "desc",
+          "description": "Optionally specify the sort direction of markets returned."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "volume_24h_strict",
+            "cmc_rank",
+            "cmc_rank_advanced",
+            "effective_liquidity",
+            "market_score",
+            "market_reputation"
+          ],
+          "default": "volume_24h_strict",
+          "description": "Optionally specify the sort order of markets returned."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "num_market_pairs,category,fee_type",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "matched_id",
+          "type": "string",
+          "description": "Optionally include one or more fiat or cryptocurrency IDs to filter market pairs by."
+        },
+        {
+          "name": "matched_symbol",
+          "type": "string",
+          "description": "Optionally include one or more fiat or cryptocurrency symbols to filter market pairs by."
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "enum": [
+            "all",
+            "spot",
+            "derivatives",
+            "otc",
+            "perpetual"
+          ],
+          "default": "all",
+          "description": "The category of trading this market falls under."
+        },
+        {
+          "name": "fee_type",
+          "type": "string",
+          "enum": [
+            "all",
+            "percentage",
+            "no-fees",
+            "transactional-mining",
+            "unknown"
+          ],
+          "default": "all",
+          "description": "The fee type the exchange enforces for this market."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyMultiplier",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/multiplier",
+      "summary": "Cryptocurrency Multiplier",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "crypto_id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "crypto_slug",
+          "type": "string",
+          "description": "One or more comma-separated cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "One or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "token_address",
+          "type": "string",
+          "description": "One or more comma-separated contract addresses."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "false",
+          "description": "Pass `true` to skip invalid `crypto_id`, `crypto_slug`, `symbol`, or `token_address` values and return only resolvable matches."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyOhlcvHistorical",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/ohlcv/historical",
+      "summary": "OHLCV Historical v1 (deprecated)",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a comma-separated list of cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "time_period",
+          "type": "string",
+          "enum": [
+            "daily",
+            "hourly"
+          ],
+          "default": "daily",
+          "description": "Time period to return OHLCV data for."
+        },
+        {
+          "name": "time_start",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to start returning OHLCV time periods for."
+        },
+        {
+          "name": "time_end",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to stop returning OHLCV time periods for (inclusive)."
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "default": "10",
+          "description": "Optionally limit the number of time periods to return results for."
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "enum": [
+            "hourly",
+            "daily",
+            "weekly",
+            "monthly",
+            "yearly",
+            "1h",
+            "2h",
+            "3h",
+            "4h",
+            "6h",
+            "12h",
+            "1d",
+            "2d",
+            "3d",
+            "7d",
+            "14d",
+            "15d",
+            "30d",
+            "60d",
+            "90d",
+            "365d"
+          ],
+          "default": "daily",
+          "description": "Optionally adjust the interval that \"time_period\" is sampled."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "By default market quotes are returned in USD."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "true",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyOhlcvLatest",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/ohlcv/latest",
+      "summary": "OHLCV Latest v1 (deprecated)",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated cryptocurrency CoinMarketCap IDs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "true",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyPriceperformancestatsLatest",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/price-performance-stats/latest",
+      "summary": "Price Performance Stats v1 (deprecated)",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated cryptocurrency CoinMarketCap IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a comma-separated list of cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "time_period",
+          "type": "string",
+          "default": "all_time",
+          "description": "Specify one or more comma-delimited time periods to return stats for."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "true",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyQuotesHistorical",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/quotes/historical",
+      "summary": "Quotes Historical v1 (deprecated)",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "time_start",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to start returning quotes for."
+        },
+        {
+          "name": "time_end",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to stop returning quotes for (inclusive)."
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "default": "10",
+          "description": "The number of interval periods to return results for."
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "enum": [
+            "yearly",
+            "monthly",
+            "weekly",
+            "daily",
+            "hourly",
+            "5m",
+            "10m",
+            "15m",
+            "30m",
+            "45m",
+            "1h",
+            "2h",
+            "3h",
+            "4h",
+            "6h",
+            "12h",
+            "24h",
+            "1d",
+            "2d",
+            "3d",
+            "7d",
+            "14d",
+            "15d",
+            "30d",
+            "60d",
+            "90d",
+            "365d"
+          ],
+          "default": "5m",
+          "description": "Interval of time to return data points for."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "By default market quotes are returned in USD."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "price,volume,market_cap,circulating_supply,total_supply,quote_timestamp,is_active,is_fiat",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "true",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyQuotesLatest",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/quotes/latest",
+      "summary": "Quotes Latest v1 (deprecated)",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated cryptocurrency CoinMarketCap IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a comma-separated list of cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "num_market_pairs,cmc_rank,date_added,tags,platform,max_supply,circulating_supply,total_supply,is_active,is_fiat",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "true",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyTrendingGainerslosers",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/trending/gainers-losers",
+      "summary": "Trending Gainers \u0026 Losers",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "time_period",
+          "type": "string",
+          "enum": [
+            "1h",
+            "24h",
+            "30d",
+            "7d"
+          ],
+          "default": "24h",
+          "description": "Adjusts the overall window of time for the biggest gainers and losers."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "percent_change_24h"
+          ],
+          "default": "percent_change_24h",
+          "description": "What field to sort the list of cryptocurrencies by."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "description": "The direction in which to order cryptocurrencies against the specified sort."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyTrendingLatest",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/trending/latest",
+      "summary": "Trending Latest",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "time_period",
+          "type": "string",
+          "enum": [
+            "24h",
+            "30d",
+            "7d"
+          ],
+          "default": "24h",
+          "description": "Adjusts the overall window of time for the latest trending coins."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1CryptocurrencyTrendingMostvisited",
+      "method": "GET",
+      "path": "/v1/cryptocurrency/trending/most-visited",
+      "summary": "Trending Most Visited",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "time_period",
+          "type": "string",
+          "enum": [
+            "24h",
+            "30d",
+            "7d"
+          ],
+          "default": "24h",
+          "description": "Adjusts the overall window of time for most visited currencies."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getGainerLoserList",
+      "method": "POST",
+      "path": "/v1/dex/gainer-loser/list",
+      "summary": "Get top gainers and losers",
+      "tag": "Token",
+      "keyless": false,
+      "deprecated": false,
+      "body": true
+    },
+    {
+      "operation_id": "getHolderCount",
+      "method": "GET",
+      "path": "/v1/dex/holders/count",
+      "summary": "Get holder count",
+      "tag": "Holder",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platform",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "tokenAddress",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "operation_id": "getHolderDetail",
+      "method": "POST",
+      "path": "/v1/dex/holders/detail",
+      "summary": "Get holder detail",
+      "tag": "Holder",
+      "keyless": true,
+      "deprecated": false,
+      "body": true
+    },
+    {
+      "operation_id": "getHolders",
+      "method": "POST",
+      "path": "/v1/dex/holders/list",
+      "summary": "Get holders list",
+      "tag": "Holder",
+      "keyless": true,
+      "deprecated": false,
+      "body": true
+    },
+    {
+      "operation_id": "getHolderTagCount",
+      "method": "GET",
+      "path": "/v1/dex/holders/tag_count",
+      "summary": "Get holder tag count",
+      "tag": "Holder",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platform",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "tokenAddress",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "operation_id": "getHoldTrendList",
+      "method": "GET",
+      "path": "/v1/dex/holders/trend/list",
+      "summary": "Get holder trend list",
+      "tag": "Holder",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Platform name or id"
+        },
+        {
+          "name": "tokenAddress",
+          "type": "string",
+          "description": "Token address"
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "description": "Kline interval: 1d"
+        },
+        {
+          "name": "from",
+          "type": "integer",
+          "description": "start timestamp"
+        },
+        {
+          "name": "to",
+          "type": "integer",
+          "description": "End timestamp"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Number of to load"
+        }
+      ]
+    },
+    {
+      "operation_id": "getLiquidityChangeList",
+      "method": "GET",
+      "path": "/v1/dex/liquidity-change/list",
+      "summary": "Get liquidity change list",
+      "tag": "Token",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Blockchain platform name (bsc/sol/etc)"
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Token contract address"
+        },
+        {
+          "name": "type",
+          "type": "integer",
+          "description": "Liquidity change type"
+        },
+        {
+          "name": "maker",
+          "type": "string",
+          "description": "Maker address, support comma separated list"
+        },
+        {
+          "name": "sortBy",
+          "type": "string",
+          "description": "Field to sort by (currently only supports 'ts')"
+        },
+        {
+          "name": "sortType",
+          "type": "string",
+          "description": "Sort direction ('asc' or 'desc', default is 'desc')"
+        },
+        {
+          "name": "startTime",
+          "type": "integer",
+          "description": "Start timestamp (inclusive)"
+        },
+        {
+          "name": "endTime",
+          "type": "integer",
+          "description": "End timestamp (inclusive)"
+        },
+        {
+          "name": "minVolume",
+          "type": "number",
+          "description": "Minimum USD volume (inclusive)"
+        },
+        {
+          "name": "maxVolume",
+          "type": "number",
+          "description": "Maximum USD volume (inclusive)"
+        },
+        {
+          "name": "lastId",
+          "type": "string",
+          "description": "Cursor for pagination, format: ts_txHash_logId"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Result limit"
+        }
+      ]
+    },
+    {
+      "operation_id": "getMemeList",
+      "method": "POST",
+      "path": "/v1/dex/meme/list",
+      "summary": "Get meme tokens",
+      "tag": "Token",
+      "keyless": false,
+      "deprecated": false,
+      "body": true
+    },
+    {
+      "operation_id": "getNewList",
+      "method": "POST",
+      "path": "/v1/dex/new/list",
+      "summary": "Get new tokens",
+      "tag": "Token",
+      "keyless": false,
+      "deprecated": false,
+      "body": true
+    },
+    {
+      "operation_id": "getPlatformDetail",
+      "method": "GET",
+      "path": "/v1/dex/platform/detail",
+      "summary": "Get platform detail",
+      "tag": "Platform",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platformName",
+          "type": "string",
+          "description": "Platform name"
+        }
+      ]
+    },
+    {
+      "operation_id": "getPlatformList",
+      "method": "GET",
+      "path": "/v1/dex/platform/list",
+      "summary": "Get platform list",
+      "tag": "Platform",
+      "keyless": true,
+      "deprecated": false
+    },
+    {
+      "operation_id": "search",
+      "method": "GET",
+      "path": "/v1/dex/search",
+      "summary": "Search tokens",
+      "tag": "Token",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "q",
+          "type": "string",
+          "description": "Search keyword"
+        },
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Platform filter"
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "description": "Sort field"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Result limit"
+        },
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Code filter"
+        }
+      ]
+    },
+    {
+      "operation_id": "getSecurityDetail",
+      "method": "GET",
+      "path": "/v1/dex/security/detail",
+      "summary": "Get security detail",
+      "tag": "Token",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platformName",
+          "type": "string",
+          "description": "Platform name"
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Token address"
+        }
+      ]
+    },
+    {
+      "operation_id": "getToken",
+      "method": "GET",
+      "path": "/v1/dex/token",
+      "summary": "Get token detail",
+      "tag": "Token",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Platform name"
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Token address"
+        }
+      ]
+    },
+    {
+      "operation_id": "queryTokenLiquidity",
+      "method": "GET",
+      "path": "/v1/dex/token-liquidity/query",
+      "summary": "Query token liquidity",
+      "tag": "Token",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Platform name"
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Token address"
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "description": "Time interval"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Result limit"
+        },
+        {
+          "name": "to",
+          "type": "integer",
+          "description": "End timestamp"
+        },
+        {
+          "name": "needLatest",
+          "type": "boolean",
+          "description": "Whether to include latest value"
+        }
+      ]
+    },
+    {
+      "operation_id": "getTokenPools",
+      "method": "GET",
+      "path": "/v1/dex/token/pools",
+      "summary": "Get token pools",
+      "tag": "Token",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Platform name"
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Token address"
+        },
+        {
+          "name": "size",
+          "type": "integer",
+          "default": "20"
+        }
+      ]
+    },
+    {
+      "operation_id": "getTokenPrice",
+      "method": "GET",
+      "path": "/v1/dex/token/price",
+      "summary": "Get token price",
+      "tag": "Token",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Platform name"
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Token address"
+        }
+      ]
+    },
+    {
+      "operation_id": "batchGetTokenPrice",
+      "method": "POST",
+      "path": "/v1/dex/token/price/batch",
+      "summary": "Batch get token prices",
+      "tag": "Token",
+      "keyless": false,
+      "deprecated": false,
+      "body": true
+    },
+    {
+      "operation_id": "batchQueryTokens",
+      "method": "POST",
+      "path": "/v1/dex/tokens/batch-query",
+      "summary": "Batch query tokens",
+      "tag": "Token",
+      "keyless": false,
+      "deprecated": false,
+      "body": true
+    },
+    {
+      "operation_id": "getSwapList",
+      "method": "GET",
+      "path": "/v1/dex/tokens/transactions",
+      "summary": "Get swap list",
+      "tag": "Token",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Blockchain platform name (bsc/sol/etc)"
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Token contract address"
+        },
+        {
+          "name": "type",
+          "type": "integer",
+          "description": "Transaction type (0 for buy, 1 for sell)"
+        },
+        {
+          "name": "types",
+          "type": "array",
+          "description": "Transaction types filter, supports: buy, sell, open, close, add, reduce"
+        },
+        {
+          "name": "maker",
+          "type": "string",
+          "description": "Maker address, support comma separated list"
+        },
+        {
+          "name": "sortBy",
+          "type": "string",
+          "description": "Field to sort by (currently only supports 'time')"
+        },
+        {
+          "name": "sortType",
+          "type": "string",
+          "description": "Sort direction ('asc' or 'desc', default is 'desc')"
+        },
+        {
+          "name": "startTime",
+          "type": "integer",
+          "description": "Start timestamp (inclusive)"
+        },
+        {
+          "name": "endTime",
+          "type": "integer",
+          "description": "End timestamp (inclusive)"
+        },
+        {
+          "name": "minVolume",
+          "type": "number",
+          "description": "Minimum volume (inclusive)"
+        },
+        {
+          "name": "maxVolume",
+          "type": "number",
+          "description": "Maximum volume (inclusive)"
+        },
+        {
+          "name": "lastId",
+          "type": "string",
+          "description": "Cursor for pagination, format: ts_txHash_logId"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Result limit"
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "description": "Version"
+        }
+      ]
+    },
+    {
+      "operation_id": "getTrendingList",
+      "method": "POST",
+      "path": "/v1/dex/tokens/trending/list",
+      "summary": "Get trending tokens",
+      "tag": "Token",
+      "keyless": false,
+      "deprecated": false,
+      "body": true
+    },
+    {
+      "operation_id": "getV1ExchangeAssets",
+      "method": "GET",
+      "path": "/v1/exchange/assets",
+      "summary": "Exchange Assets",
+      "tag": "Exchange",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "A CoinMarketCap exchange ID."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1ExchangeInfo",
+      "method": "GET",
+      "path": "/v1/exchange/info",
+      "summary": "Metadata",
+      "tag": "Exchange",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency exchange ids."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively, one or more comma-separated exchange names in URL friendly shorthand \"slug\" format (all lowercase, spaces replaced with hyphens)."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "urls,logo,description,date_launched,notice",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1ExchangeListingsLatest",
+      "method": "GET",
+      "path": "/v1/exchange/listings/latest",
+      "summary": "Listings Latest",
+      "tag": "Exchange",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "name",
+            "volume_24h",
+            "volume_24h_adjusted",
+            "exchange_score"
+          ],
+          "default": "volume_24h",
+          "description": "What field to sort the list of exchanges by."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "description": "The direction in which to order exchanges against the specified sort."
+        },
+        {
+          "name": "market_type",
+          "type": "string",
+          "enum": [
+            "fees",
+            "no_fees",
+            "all"
+          ],
+          "default": "all",
+          "description": "The type of exchange markets to include in rankings."
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "enum": [
+            "all",
+            "spot",
+            "derivatives",
+            "dex",
+            "lending"
+          ],
+          "default": "all",
+          "description": "The category for this exchange."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "num_market_pairs,traffic_score,rank,exchange_score,effective_liquidity_24h",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1ExchangeMap",
+      "method": "GET",
+      "path": "/v1/exchange/map",
+      "summary": "Exchange ID Map",
+      "tag": "Exchange",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "listing_status",
+          "type": "string",
+          "default": "active",
+          "description": "Only active exchanges are returned by default."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Optionally pass a comma-separated list of exchange slugs (lowercase URL friendly shorthand name with spaces replaced with dashes) to return CoinMarketCap IDs for."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "volume_24h",
+            "id"
+          ],
+          "default": "id",
+          "description": "What field to sort the list of exchanges by."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "first_historical_data,last_historical_data,is_active",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "crypto_id",
+          "type": "string",
+          "description": "Optionally include one fiat or cryptocurrency IDs to filter market pairs by."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1ExchangeMarketpairsLatest",
+      "method": "GET",
+      "path": "/v1/exchange/market-pairs/latest",
+      "summary": "Market Pairs Latest",
+      "tag": "Exchange",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "A CoinMarketCap exchange ID."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass an exchange \"slug\" (URL friendly all lowercase shorthand version of name with spaces replaced with hyphens)."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "num_market_pairs,category,fee_type",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "matched_id",
+          "type": "string",
+          "description": "Optionally include one or more comma-delimited fiat or cryptocurrency IDs to filter market pairs by."
+        },
+        {
+          "name": "matched_symbol",
+          "type": "string",
+          "description": "Optionally include one or more comma-delimited fiat or cryptocurrency symbols to filter market pairs by."
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "enum": [
+            "all",
+            "spot",
+            "derivatives",
+            "otc",
+            "futures",
+            "perpetual"
+          ],
+          "default": "all",
+          "description": "The category of trading this market falls under."
+        },
+        {
+          "name": "fee_type",
+          "type": "string",
+          "enum": [
+            "all",
+            "percentage",
+            "no-fees",
+            "transactional-mining",
+            "unknown"
+          ],
+          "default": "all",
+          "description": "The fee type the exchange enforces for this market."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1ExchangeQuotesHistorical",
+      "method": "GET",
+      "path": "/v1/exchange/quotes/historical",
+      "summary": "Quotes Historical",
+      "tag": "Exchange",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated exchange CoinMarketCap ids."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively, one or more comma-separated exchange names in URL friendly shorthand \"slug\" format (all lowercase, spaces replaced with hyphens)."
+        },
+        {
+          "name": "time_start",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to start returning quotes for."
+        },
+        {
+          "name": "time_end",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to stop returning quotes for (inclusive)."
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "default": "10",
+          "description": "The number of interval periods to return results for."
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "enum": [
+            "yearly",
+            "monthly",
+            "weekly",
+            "daily",
+            "hourly",
+            "5m",
+            "10m",
+            "15m",
+            "30m",
+            "45m",
+            "1h",
+            "2h",
+            "3h",
+            "4h",
+            "6h",
+            "12h",
+            "24h",
+            "1d",
+            "2d",
+            "3d",
+            "7d",
+            "14d",
+            "15d",
+            "30d",
+            "60d",
+            "90d",
+            "365d"
+          ],
+          "default": "5m",
+          "description": "Interval of time to return data points for."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "By default market quotes are returned in USD."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1ExchangeQuotesLatest",
+      "method": "GET",
+      "path": "/v1/exchange/quotes/latest",
+      "summary": "Quotes Latest",
+      "tag": "Exchange",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap exchange IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively, pass a comma-separated list of exchange \"slugs\" (URL friendly all lowercase shorthand version of name with spaces replaced with hyphens)."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "num_market_pairs,traffic_score,rank,exchange_score,liquidity_score,effective_liquidity_24h",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1FiatMap",
+      "method": "GET",
+      "path": "/v1/fiat/map",
+      "summary": "Fiat ID Map",
+      "tag": "Tools",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "name",
+            "id"
+          ],
+          "default": "id",
+          "description": "What field to sort the list by."
+        },
+        {
+          "name": "include_metals",
+          "type": "boolean",
+          "default": "false",
+          "description": "Pass `true` to include precious metals."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1GlobalmetricsQuotesHistorical",
+      "method": "GET",
+      "path": "/v1/global-metrics/quotes/historical",
+      "summary": "Quotes Historical",
+      "tag": "Global Metrics",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "time_start",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to start returning quotes for."
+        },
+        {
+          "name": "time_end",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to stop returning quotes for (inclusive)."
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "default": "10",
+          "description": "The number of interval periods to return results for."
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "enum": [
+            "yearly",
+            "monthly",
+            "weekly",
+            "daily",
+            "hourly",
+            "5m",
+            "10m",
+            "15m",
+            "30m",
+            "45m",
+            "1h",
+            "2h",
+            "3h",
+            "4h",
+            "6h",
+            "12h",
+            "24h",
+            "1d",
+            "2d",
+            "3d",
+            "7d",
+            "14d",
+            "15d",
+            "30d",
+            "60d",
+            "90d",
+            "365d"
+          ],
+          "default": "1d",
+          "description": "Interval of time to return data points for."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "By default market quotes are returned in USD."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "btc_dominance,eth_dominance,active_cryptocurrencies,active_exchanges,active_market_pairs,total_volume_24h,total_volume_24h_reported,altcoin_market_cap,altcoin_volume_24h,altcoin_volume_24h_reported",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1GlobalmetricsQuotesLatest",
+      "method": "GET",
+      "path": "/v1/global-metrics/quotes/latest",
+      "summary": "Quotes Latest",
+      "tag": "Global Metrics",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getKlineCandles",
+      "method": "GET",
+      "path": "/v1/k-line/candles",
+      "summary": "Get K-line candles",
+      "tag": "OHLCV",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Platform name or id"
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Token or pool address"
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "description": "Kline interval: 1s/5s/30s/1min/3min/5min/15min/30min/1h/2h/4h/6h/8h/12h/1d/3d/1w/1m"
+        },
+        {
+          "name": "from",
+          "type": "integer",
+          "description": "Start timestamp (UNIX epoch)"
+        },
+        {
+          "name": "to",
+          "type": "integer",
+          "description": "End timestamp (UNIX epoch)"
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "description": "Kline unit: usd, native, quote"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Number of candles to load"
+        },
+        {
+          "name": "pm",
+          "type": "string",
+          "description": "Kline type: p (price), m (marketcap)"
+        }
+      ]
+    },
+    {
+      "operation_id": "getKlinePoints",
+      "method": "GET",
+      "path": "/v1/k-line/points",
+      "summary": "Get K-line points",
+      "tag": "OHLCV",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Platform name or id"
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Token or pool address"
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "description": "Kline interval: 1s/5s/30s/1min/3min/5min/15min/30min/1h/2h/4h/6h/8h/12h/1d/3d/1w/1m"
+        },
+        {
+          "name": "from",
+          "type": "integer",
+          "description": "Start timestamp (UNIX epoch)"
+        },
+        {
+          "name": "to",
+          "type": "integer",
+          "description": "End timestamp (UNIX epoch)"
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "description": "Kline unit: usd, native, quote"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Number of points to load"
+        },
+        {
+          "name": "pm",
+          "type": "string",
+          "description": "Kline type: p (price), m (marketcap)"
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1KeyInfo",
+      "method": "GET",
+      "path": "/v1/key/info",
+      "summary": "Key Info",
+      "tag": "Tools",
+      "keyless": false,
+      "deprecated": false
+    },
+    {
+      "operation_id": "getV1PartnersFlipsidecryptoFcasListingsLatest",
+      "method": "GET",
+      "path": "/v1/partners/flipside-crypto/fcas/listings/latest",
+      "summary": "FCAS Listings Latest (deprecated)",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "point_change_24h,percent_change_24h",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1PartnersFlipsidecryptoFcasQuotesLatest",
+      "method": "GET",
+      "path": "/v1/partners/flipside-crypto/fcas/quotes/latest",
+      "summary": "FCAS Quotes Latest (deprecated)",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated cryptocurrency CoinMarketCap IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a comma-separated list of cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "point_change_24h,percent_change_24h",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1SimplePrice",
+      "method": "GET",
+      "path": "/v1/simple/price",
+      "summary": "Simple Price v1 (deprecated)",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "ids",
+          "type": "string",
+          "required": true,
+          "description": "Comma-separated list of CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "include_market_cap",
+          "type": "boolean",
+          "default": "false",
+          "description": "Include market cap values in the response."
+        },
+        {
+          "name": "include_volume_24h",
+          "type": "boolean",
+          "default": "false",
+          "description": "Include 24-hour volume in the response."
+        },
+        {
+          "name": "include_percent_change_24h",
+          "type": "boolean",
+          "default": "false",
+          "description": "Include 24-hour price change percentage in the response."
+        },
+        {
+          "name": "include_last_updated",
+          "type": "boolean",
+          "default": "false",
+          "description": "Include last updated timestamp in the response."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV1ToolsPostman",
+      "method": "GET",
+      "path": "/v1/tools/postman",
+      "summary": "Postman Conversion v1",
+      "tag": "Tools",
+      "keyless": false,
+      "deprecated": false
+    },
+    {
+      "operation_id": "getV1ToolsPriceconversion",
+      "method": "GET",
+      "path": "/v1/tools/price-conversion",
+      "summary": "Price Conversion v1 (deprecated)",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "amount",
+          "type": "number",
+          "required": true,
+          "description": "An amount of currency to convert."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "description": "The CoinMarketCap currency ID of the base cryptocurrency or fiat to convert from."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively the currency symbol of the base cryptocurrency or fiat to convert from."
+        },
+        {
+          "name": "time",
+          "type": "string",
+          "description": "Optional timestamp (Unix or ISO 8601) to reference historical pricing during conversion."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Pass up to 120 comma-separated fiat or cryptocurrency symbols to convert the source amount to."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV2CryptocurrencyInfo",
+      "method": "GET",
+      "path": "/v2/cryptocurrency/info",
+      "summary": "Metadata",
+      "tag": "Cryptocurrency",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a comma-separated list of cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Alternatively pass in a contract address."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "false",
+          "description": "Pass `true` to relax request validation rules."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "urls,logo,description,tags,platform,date_added,notice",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV2CryptocurrencyMarketpairsLatest",
+      "method": "GET",
+      "path": "/v2/cryptocurrency/market-pairs/latest",
+      "summary": "Market Pairs Latest",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "A cryptocurrency or fiat currency by CoinMarketCap ID to list market pairs for."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a cryptocurrency by slug."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass a cryptocurrency by symbol."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "desc",
+          "description": "Optionally specify the sort direction of markets returned."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "volume_24h_strict",
+            "cmc_rank",
+            "cmc_rank_advanced",
+            "effective_liquidity",
+            "market_score",
+            "market_reputation"
+          ],
+          "default": "volume_24h_strict",
+          "description": "Optionally specify the sort order of markets returned."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "num_market_pairs,category,fee_type",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "matched_id",
+          "type": "string",
+          "description": "Optionally include one or more fiat or cryptocurrency IDs to filter market pairs by."
+        },
+        {
+          "name": "matched_symbol",
+          "type": "string",
+          "description": "Optionally include one or more fiat or cryptocurrency symbols to filter market pairs by."
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "enum": [
+            "all",
+            "spot",
+            "derivatives",
+            "otc",
+            "perpetual"
+          ],
+          "default": "all",
+          "description": "The category of trading this market falls under."
+        },
+        {
+          "name": "fee_type",
+          "type": "string",
+          "enum": [
+            "all",
+            "percentage",
+            "no-fees",
+            "transactional-mining",
+            "unknown"
+          ],
+          "default": "all",
+          "description": "The fee type the exchange enforces for this market."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV2CryptocurrencyOhlcvHistorical",
+      "method": "GET",
+      "path": "/v2/cryptocurrency/ohlcv/historical",
+      "summary": "OHLCV Historical",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a comma-separated list of cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "time_period",
+          "type": "string",
+          "enum": [
+            "daily",
+            "hourly"
+          ],
+          "default": "daily",
+          "description": "Time period to return OHLCV data for."
+        },
+        {
+          "name": "time_start",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to start returning OHLCV time periods for."
+        },
+        {
+          "name": "time_end",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to stop returning OHLCV time periods for (inclusive)."
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "default": "10",
+          "description": "Optionally limit the number of time periods to return results for."
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "enum": [
+            "hourly",
+            "daily",
+            "weekly",
+            "monthly",
+            "yearly",
+            "1h",
+            "2h",
+            "3h",
+            "4h",
+            "6h",
+            "12h",
+            "1d",
+            "2d",
+            "3d",
+            "7d",
+            "14d",
+            "15d",
+            "30d",
+            "60d",
+            "90d",
+            "365d"
+          ],
+          "default": "daily",
+          "description": "Optionally adjust the interval that \"time_period\" is sampled."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "By default market quotes are returned in USD."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "true",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV2CryptocurrencyOhlcvLatest",
+      "method": "GET",
+      "path": "/v2/cryptocurrency/ohlcv/latest",
+      "summary": "OHLCV Latest",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated cryptocurrency CoinMarketCap IDs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "true",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV2CryptocurrencyPriceperformancestatsLatest",
+      "method": "GET",
+      "path": "/v2/cryptocurrency/price-performance-stats/latest",
+      "summary": "Price Performance Stats",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated cryptocurrency CoinMarketCap IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a comma-separated list of cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "time_period",
+          "type": "string",
+          "default": "all_time",
+          "description": "Specify one or more comma-delimited time periods to return stats for."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "true",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV2CryptocurrencyQuotesHistorical",
+      "method": "GET",
+      "path": "/v2/cryptocurrency/quotes/historical",
+      "summary": "Quotes Historical v2",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "time_start",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to start returning quotes for."
+        },
+        {
+          "name": "time_end",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to stop returning quotes for (inclusive)."
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "default": "10",
+          "description": "The number of interval periods to return results for."
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "enum": [
+            "yearly",
+            "monthly",
+            "weekly",
+            "daily",
+            "hourly",
+            "5m",
+            "10m",
+            "15m",
+            "30m",
+            "45m",
+            "1h",
+            "2h",
+            "3h",
+            "4h",
+            "6h",
+            "12h",
+            "24h",
+            "1d",
+            "2d",
+            "3d",
+            "7d",
+            "14d",
+            "15d",
+            "30d",
+            "60d",
+            "90d",
+            "365d"
+          ],
+          "default": "5m",
+          "description": "Interval of time to return data points for."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "By default market quotes are returned in USD."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "price,volume,market_cap,circulating_supply,total_supply,quote_timestamp,is_active,is_fiat",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "true",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV2CryptocurrencyQuotesLatest",
+      "method": "GET",
+      "path": "/v2/cryptocurrency/quotes/latest",
+      "summary": "Quotes Latest v2",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated cryptocurrency CoinMarketCap IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a comma-separated list of cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "num_market_pairs,cmc_rank,date_added,tags,platform,max_supply,circulating_supply,total_supply,is_active,is_fiat",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "true",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV2DexMultiplier",
+      "method": "GET",
+      "path": "/v2/dex/multiplier",
+      "summary": "Get token multiplier",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Platform name."
+        },
+        {
+          "name": "platform_id",
+          "type": "integer",
+          "description": "Platform id."
+        },
+        {
+          "name": "token_address",
+          "type": "string",
+          "description": "Token address."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Pagination start (1-based index)."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Number of results per page."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV2SimplePrice",
+      "method": "GET",
+      "path": "/v2/simple/price",
+      "summary": "Simple Price",
+      "tag": "Cryptocurrency",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass comma-separated cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "default": "USD",
+          "description": "Optionally calculate price in up to 120 fiat or cryptocurrency conversions at once by passing a comma-separated list of symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Same as `convert`, but by CoinMarketCap currency ID instead of symbol."
+        },
+        {
+          "name": "include_market_cap",
+          "type": "boolean",
+          "default": "false",
+          "description": "Include `market_cap` in each quote object."
+        },
+        {
+          "name": "include_24h_volume",
+          "type": "boolean",
+          "default": "false",
+          "description": "Include `volume_24h` in each quote object."
+        },
+        {
+          "name": "include_24h_change",
+          "type": "boolean",
+          "default": "false",
+          "description": "Include `percent_change_24h` in each quote object."
+        },
+        {
+          "name": "include_last_updated",
+          "type": "boolean",
+          "default": "false",
+          "description": "Include `last_updated` (ISO 8601) in each quote object."
+        },
+        {
+          "name": "include_all",
+          "type": "boolean",
+          "default": "false",
+          "description": "Shortcut to enable `include_market_cap`, `include_24h_volume`, `include_24h_change`, and `include_last_updated` together."
+        },
+        {
+          "name": "precision",
+          "type": "integer",
+          "description": "Round all price, market-cap, and volume values to this many decimal places."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "true",
+          "description": "When multiple assets are requested, skip invalid lookups and return the valid ones rather than failing the whole request."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV2ToolsPriceconversion",
+      "method": "GET",
+      "path": "/v2/tools/price-conversion",
+      "summary": "Price Conversion v2",
+      "tag": "Tools",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "amount",
+          "type": "number",
+          "required": true,
+          "description": "An amount of currency to convert."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "description": "The CoinMarketCap currency ID of the base cryptocurrency or fiat to convert from."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively the currency symbol of the base cryptocurrency or fiat to convert from."
+        },
+        {
+          "name": "time",
+          "type": "string",
+          "description": "Optional timestamp (Unix or ISO 8601) to reference historical pricing during conversion."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Pass up to 120 comma-separated fiat or cryptocurrency symbols to convert the source amount to."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV3CryptocurrencyListingsLatest",
+      "method": "GET",
+      "path": "/v3/cryptocurrency/listings/latest",
+      "summary": "Listings Latest",
+      "tag": "Cryptocurrency",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "start",
+          "type": "string",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "string",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "price_min",
+          "type": "string",
+          "description": "Optionally specify a threshold of minimum USD price to filter results by."
+        },
+        {
+          "name": "price_max",
+          "type": "string",
+          "description": "Optionally specify a threshold of maximum USD price to filter results by."
+        },
+        {
+          "name": "market_cap_min",
+          "type": "string",
+          "description": "Optionally specify a threshold of minimum market cap to filter results by."
+        },
+        {
+          "name": "market_cap_max",
+          "type": "string",
+          "description": "Optionally specify a threshold of maximum market cap to filter results by."
+        },
+        {
+          "name": "volume_24h_min",
+          "type": "string",
+          "description": "Optionally specify a threshold of minimum 24 hour USD volume to filter results by."
+        },
+        {
+          "name": "volume_24h_max",
+          "type": "string",
+          "description": "Optionally specify a threshold of maximum 24 hour USD volume to filter results by."
+        },
+        {
+          "name": "circulating_supply_min",
+          "type": "string",
+          "description": "Optionally specify a threshold of minimum circulating supply to filter results by."
+        },
+        {
+          "name": "circulating_supply_max",
+          "type": "string",
+          "description": "Optionally specify a threshold of maximum circulating supply to filter results by."
+        },
+        {
+          "name": "percent_change_24h_min",
+          "type": "string",
+          "description": "Optionally specify a threshold of minimum 24 hour percent change to filter results by."
+        },
+        {
+          "name": "percent_change_24h_max",
+          "type": "string",
+          "description": "Optionally specify a threshold of maximum 24 hour percent change to filter results by."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "default": "market_cap",
+          "description": "What field to sort the list of cryptocurrencies by."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "default": "desc",
+          "description": "The direction in which to order cryptocurrencies against the specified sort."
+        },
+        {
+          "name": "cryptocurrency_type",
+          "type": "string",
+          "default": "all",
+          "description": "The type of cryptocurrency to include."
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "default": "all",
+          "description": "The tag of cryptocurrency to include."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "num_market_pairs,cmc_rank,date_added,tags,platform,max_supply,circulating_supply,total_supply",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV3CryptocurrencyQuotesHistorical",
+      "method": "GET",
+      "path": "/v3/cryptocurrency/quotes/historical",
+      "summary": "Quotes Historical",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "time_start",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to start returning quotes for."
+        },
+        {
+          "name": "time_end",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to stop returning quotes for (inclusive)."
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "default": "10",
+          "description": "The number of interval periods to return results for."
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "enum": [
+            "yearly",
+            "monthly",
+            "weekly",
+            "daily",
+            "hourly",
+            "5m",
+            "10m",
+            "15m",
+            "30m",
+            "45m",
+            "1h",
+            "2h",
+            "3h",
+            "4h",
+            "6h",
+            "12h",
+            "24h",
+            "1d",
+            "2d",
+            "3d",
+            "7d",
+            "14d",
+            "15d",
+            "30d",
+            "60d",
+            "90d",
+            "365d"
+          ],
+          "default": "5m",
+          "description": "Interval of time to return data points for."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "By default market quotes are returned in USD."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "default": "price,volume,market_cap,circulating_supply,total_supply,quote_timestamp,is_active,is_fiat",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "true",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV3CryptocurrencyQuotesLatest",
+      "method": "GET",
+      "path": "/v3/cryptocurrency/quotes/latest",
+      "summary": "Quotes Latest",
+      "tag": "Cryptocurrency",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated cryptocurrency CoinMarketCap IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass a comma-separated list of cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass one or more comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "description": "Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "string",
+          "description": "Pass true to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV3FearandgreedHistorical",
+      "method": "GET",
+      "path": "/v3/fear-and-greed/historical",
+      "summary": "CMC Crypto Fear and Greed Historical",
+      "tag": "Global Metrics",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "50",
+          "description": "Optionally specify the number of results to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV3FearandgreedLatest",
+      "method": "GET",
+      "path": "/v3/fear-and-greed/latest",
+      "summary": "CMC Crypto Fear and Greed Latest",
+      "tag": "Global Metrics",
+      "keyless": true,
+      "deprecated": false
+    },
+    {
+      "operation_id": "getV3IndexCMC100Historical",
+      "method": "GET",
+      "path": "/v3/index/cmc100-historical",
+      "summary": "CoinMarketCap 100 Index Historical",
+      "tag": "CMC Index",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "time_start",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to start returning CoinMarketCap 100 Index data for."
+        },
+        {
+          "name": "time_end",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to stop returning CoinMarketCap 100 Index data for (inclusive)."
+        },
+        {
+          "name": "count",
+          "type": "string",
+          "description": "The number of interval periods to return results for."
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "description": "Optionally adjust the interval of data returned.Valid values:\"5m\",\"15m\",\"daily\"."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV3IndexCMC100Latest",
+      "method": "GET",
+      "path": "/v3/index/cmc100-latest",
+      "summary": "CoinMarketCap 100 Index Latest",
+      "tag": "CMC Index",
+      "keyless": true,
+      "deprecated": false
+    },
+    {
+      "operation_id": "getV3IndexCMC20Historical",
+      "method": "GET",
+      "path": "/v3/index/cmc20-historical",
+      "summary": "CoinMarketCap 20 Index Historical",
+      "tag": "CMC Index",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "time_start",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to start returning CoinMarketCap 20 Index data for."
+        },
+        {
+          "name": "time_end",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to stop returning CoinMarketCap 20 Index data for (inclusive)."
+        },
+        {
+          "name": "count",
+          "type": "string",
+          "description": "The number of interval periods to return results for."
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "description": "Optionally adjust the interval of data returned.Valid values:\"5m\",\"15m\",\"daily\"."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV3IndexCMC20Latest",
+      "method": "GET",
+      "path": "/v3/index/cmc20-latest",
+      "summary": "CoinMarketCap 20 Index Latest",
+      "tag": "CMC Index",
+      "keyless": true,
+      "deprecated": false
+    },
+    {
+      "operation_id": "getListingsInfo",
+      "method": "GET",
+      "path": "/v4/dex/listings/info",
+      "summary": "DEX Metadata",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency exchange ids."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "description": "Default:`\"\"` Valid values: `\"urls\"` `\"logo\"` `\"description\"` `\"date_launched\"` `\"notice\"` Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getLatestListings",
+      "method": "GET",
+      "path": "/v4/dex/listings/quotes",
+      "summary": "DEX Listings Latest",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "start",
+          "type": "string",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "string",
+          "default": "50",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "default": "volume_24h",
+          "description": "Default:`\"volume_24h\"` Valid values: `\"name\"` `\"volume_24h\"` `\"market_share\"` `\"num_markets\"` What field to sort the list of exchanges by."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "default": "desc",
+          "description": "Default:`\"desc\"` Valid values: `\"desc\"` `\"asc\"` The direction in which to order exchanges against the specified sort."
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "default": "all",
+          "description": "Default:`\"all\"` Valid values: `\"all\"` `\"orderbook\"` `\"swap\"` `\"aggregator\"` The category for this exchange."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "description": "Default:`\"\"` Valid values: `\"date_launched\"` Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 30 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency IDs."
+        }
+      ]
+    },
+    {
+      "operation_id": "getNetworks",
+      "method": "GET",
+      "path": "/v4/dex/networks/list",
+      "summary": "CoinMarketCap ID Map",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "start",
+          "type": "string",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "string",
+          "default": "50",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "default": "id",
+          "description": "Default:`\"id\"` Valid values: `\"id\"` `\"name\"` What field to sort the list of networks by."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "default": "desc",
+          "description": "Default:`\"desc\"` Valid values: `\"desc\"` `\"asc\"` The direction in which to order networks against the specified sort."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "description": "Default:`\"\"` Valid values: `\"alternativeName\"` `\"cryptocurrencyId\"` `\"cryptocurrenySlug\"` `\"wrappedTokenId\"` `\"wrappedTokenSlug\"` `\"tokenExplorerUrl\"` `\"poolExplorerUrl\"` `\"transactionHashUrl\"` Optionally specify a comma-separated list of supplemental data fields to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getPairsHistoricalOHLCV",
+      "method": "GET",
+      "path": "/v4/dex/pairs/ohlcv/historical",
+      "summary": "OHLCV Historical",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "contract_address",
+          "type": "string",
+          "description": "One contract address."
+        },
+        {
+          "name": "network_id",
+          "type": "string",
+          "description": "One or more CoinMarketCap cryptocurrency network ids"
+        },
+        {
+          "name": "network_slug",
+          "type": "string",
+          "description": "Alternatively, one network names in URL friendly shorthand \"slug\" format (all lowercase, spaces replaced with hyphens)."
+        },
+        {
+          "name": "time_period",
+          "type": "string",
+          "default": "daily",
+          "description": "Default:`\"daily\"` Valid values: `\"daily\"` `\"hourly\"` `\"1m\"` `\"5m\"` `\"15m\"` `\"4h\"` Time period to return OHLCV data for."
+        },
+        {
+          "name": "time_start",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to start returning OHLCV time periods for."
+        },
+        {
+          "name": "time_end",
+          "type": "string",
+          "description": "Timestamp (Unix or ISO 8601) to stop returning OHLCV time periods for (inclusive)."
+        },
+        {
+          "name": "count",
+          "type": "string",
+          "default": "10",
+          "description": "Optionally limit the number of time periods to return results for."
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "default": "daily",
+          "description": "Default:`\"daily\"` Valid values: `\"1m\"` `\"5m\"` `\"15m\"` `\"30m\"` `\"1h\"` `\"4h\"` `\"8h\"` `\"12h\"` `\"daily\"` `\"weekly\"` `\"monthly\"` Optionally adjust the interval that \"time_period\" is sampled."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "description": "Default:`\"\"` Valid values: `\"pool_created\"` `\"percent_pooled_base_asset\"` `\"num_transactions_24h\"` `\"pool_base_asset\"` `\"pool_quote_asset\"` `\"24h_volume_quote_asset\"` `\"total_supply_quote_asset\"` `\"total_supply_base_asset\"` `\"holders\"` `\"buy_tax\"` `\"sell_tax\"` `\"security_scan\"` `\"24h_no_of_buys\"` `\"24h_no_of_sells\"` `\"24h_buy_volume\"` `\"24h_sell_volume\"` Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "string",
+          "description": "Pass true to relax request validation rules."
+        },
+        {
+          "name": "reverse_order",
+          "type": "string",
+          "description": "Pass true to invert the order of a spot pair."
+        }
+      ]
+    },
+    {
+      "operation_id": "getPairsLatestOHLCV",
+      "method": "GET",
+      "path": "/v4/dex/pairs/ohlcv/latest",
+      "summary": "OHLCV Latest",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "contract_address",
+          "type": "string",
+          "description": "One or more comma-separated contract addresses."
+        },
+        {
+          "name": "network_id",
+          "type": "string",
+          "description": "One or more CoinMarketCap cryptocurrency network ids"
+        },
+        {
+          "name": "network_slug",
+          "type": "string",
+          "description": "Alternatively, one network names in URL friendly shorthand \"slug\" format (all lowercase, spaces replaced with hyphens)."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "description": "Default:`\"\"` Valid values: `\"pool_created\"` `\"percent_pooled_base_asset\"` `\"num_transactions_24h\"` `\"pool_base_asset\"` `\"pool_quote_asset\"` `\"24h_volume_quote_asset\"` `\"total_supply_quote_asset\"` `\"total_supply_base_asset\"` `\"holders\"` `\"buy_tax\"` `\"sell_tax\"` `\"security_scan\"` `\"24h_no_of_buys\"` `\"24h_no_of_sells\"` `\"24h_buy_volume\"` `\"24h_sell_volume\"` Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "string",
+          "description": "Pass true to relax request validation rules."
+        },
+        {
+          "name": "reverse_order",
+          "type": "string",
+          "description": "Pass true to invert the order of a spot pair."
+        }
+      ]
+    },
+    {
+      "operation_id": "getLatestPairsQuotes",
+      "method": "GET",
+      "path": "/v4/dex/pairs/quotes/latest",
+      "summary": "Quotes Latest",
+      "tag": "Token",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "contract_address",
+          "type": "string",
+          "description": "One or more comma-separated contract addresses."
+        },
+        {
+          "name": "network_id",
+          "type": "string",
+          "description": "One or more CoinMarketCap cryptocurrency network ids"
+        },
+        {
+          "name": "network_slug",
+          "type": "string",
+          "description": "Alternatively, one network names in URL friendly shorthand \"slug\" format (all lowercase, spaces replaced with hyphens)."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "description": "Default:`\"\"` Valid values: `\"pool_created\"` `\"percent_pooled_base_asset\"` `\"num_transactions_24h\"` `\"pool_base_asset\"` `\"pool_quote_asset\"` `\"24h_volume_quote_asset\"` `\"total_supply_quote_asset\"` `\"total_supply_base_asset\"` `\"holders\"` `\"buy_tax\"` `\"sell_tax\"` `\"security_scan\"` `\"24h_no_of_buys\"` `\"24h_no_of_sells\"` `\"24h_buy_volume\"` `\"24h_sell_volume\"` Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "string",
+          "description": "Pass true to relax request validation rules."
+        },
+        {
+          "name": "reverse_order",
+          "type": "string",
+          "description": "Pass true to invert the order of a spot pair."
+        }
+      ]
+    },
+    {
+      "operation_id": "getPairsLatestTrade",
+      "method": "GET",
+      "path": "/v4/dex/pairs/trade/latest",
+      "summary": "Trades Latest",
+      "tag": "Deprecated",
+      "keyless": false,
+      "deprecated": true,
+      "params": [
+        {
+          "name": "contract_address",
+          "type": "string",
+          "description": "One or more comma-separated contract addresses."
+        },
+        {
+          "name": "network_id",
+          "type": "string",
+          "description": "One CoinMarketCap cryptocurrency network id."
+        },
+        {
+          "name": "network_slug",
+          "type": "string",
+          "description": "Alternatively, one network names in URL friendly shorthand \"slug\" format (all lowercase, spaces replaced with hyphens)."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "description": "Default:`\"\"` Valid values: `\"transaction_hash\"` `\"blockchain_explorer_link\"` Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 30 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency IDs."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "string",
+          "default": "true",
+          "description": "Pass true to relax request validation rules."
+        },
+        {
+          "name": "reverse_order",
+          "type": "string",
+          "default": "false",
+          "description": "Pass true to invert the order of a spot pair."
+        }
+      ]
+    },
+    {
+      "operation_id": "getSpotPairsLatest",
+      "method": "GET",
+      "path": "/v4/dex/spot-pairs/latest",
+      "summary": "Pairs Listings Latest",
+      "tag": "Token",
+      "keyless": true,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "network_id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency network ids."
+        },
+        {
+          "name": "network_slug",
+          "type": "string",
+          "description": "Alternatively, one or more comma-separated network names in URL friendly shorthand slug format (all lowercase, spaces replaced with hyphens)."
+        },
+        {
+          "name": "dex_id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap dex exchange ids"
+        },
+        {
+          "name": "dex_slug",
+          "type": "string",
+          "description": "Alternatively, one or more comma-separated dex exchange names in URL friendly shorthand slug format (all lowercase, spaces replaced with hyphens)."
+        },
+        {
+          "name": "base_asset_id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency ids."
+        },
+        {
+          "name": "base_asset_symbol",
+          "type": "string",
+          "description": "Alternatively, one or more comma-separated network symbol in URL friendly shorthand slug format (all lowercase, spaces replaced with hyphens).At least one id or slug is required."
+        },
+        {
+          "name": "base_asset_contract_address",
+          "type": "string",
+          "description": "Alternatively, one base asset contract address in URL friendly shorthand slug format (all lowercase, spaces replaced with hyphens).At least one id or slug is required."
+        },
+        {
+          "name": "base_asset_ucid",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "quote_asset_id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency ids."
+        },
+        {
+          "name": "quote_asset_symbol",
+          "type": "string",
+          "description": "Alternatively, one or more comma-separated network symbol in URL friendly shorthand slug format (all lowercase, spaces replaced with hyphens)."
+        },
+        {
+          "name": "quote_asset_contract_address",
+          "type": "string",
+          "description": "Alternatively, one quote asset contract address in URL friendly shorthand slug format (all lowercase, spaces replaced with hyphens)."
+        },
+        {
+          "name": "quote_asset_ucid",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "scroll_id",
+          "type": "string",
+          "description": "After your initial query, the API responds with the initial set of results and a scroll_ids."
+        },
+        {
+          "name": "limit",
+          "type": "string",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "liquidity_min",
+          "type": "string",
+          "description": "Optionally specify a threshold of minimum liquidity to filter results by."
+        },
+        {
+          "name": "liquidity_max",
+          "type": "string",
+          "description": "Optionally specify a threshold of maximum liquidity to filter results by."
+        },
+        {
+          "name": "volume_24h_min",
+          "type": "string",
+          "description": "Optionally specify a threshold of minimum 24 hour USD volume to filter results by."
+        },
+        {
+          "name": "volume_24h_max",
+          "type": "string",
+          "description": "Optionally specify a threshold of maximum 24 hour USD volume to filter results by."
+        },
+        {
+          "name": "no_of_transactions_24h_min",
+          "type": "string",
+          "description": "Optionally specify a threshold of minimum 24h no."
+        },
+        {
+          "name": "no_of_transactions_24h_max",
+          "type": "string",
+          "description": "Optionally specify a threshold of maximum 24h no."
+        },
+        {
+          "name": "percent_change_24h_min",
+          "type": "string",
+          "description": "Optionally specify a threshold of minimum 24 hour percent change to filter results by."
+        },
+        {
+          "name": "percent_change_24h_max",
+          "type": "string",
+          "description": "Optionally specify a threshold of maximum 24 hour percent change to filter results by."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "description": "Default:`\"volume_24h\"` Valid values: `\"volume_24h\"` `\"liquidity\"` `\"no_of_transactions_24h\"` `\"percent_change_24h\"` // todo Sort the list of dex spot pairs by."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "description": "Default:`\"desc\"` Valid values: `\"desc\"` `\"asc\"` The direction in which to order dex spot pairs against the specified sort."
+        },
+        {
+          "name": "aux",
+          "type": "string",
+          "description": "Default:`\"\"` Valid values: `\"pool_created\"` `\"percent_pooled_base_asset\"` `\"num_transactions_24h\"` `\"pool_base_asset\"` `\"pool_quote_asset\"` `\"24h_volume_quote_asset\"` `\"total_supply_quote_asset\"` `\"total_supply_base_asset\"` `\"holders\"` `\"buy_tax\"` `\"sell_tax\"` `\"security_scan\"` `\"24h_no_of_buys\"` `\"24h_no_of_sells\"` `\"24h_buy_volume\"` `\"24h_sell_volume\"` Optionally specify a comma-separated list of supplemental data fields to return."
+        },
+        {
+          "name": "reverse_order",
+          "type": "string",
+          "description": "Pass true to invert the order of a spot pair."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5CmcAiCoinsLatest",
+      "method": "GET",
+      "path": "/v5/cmc-ai/coins/latest",
+      "summary": "Coin Insights Latest",
+      "tag": "CMC AI",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "crypto_id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass comma-separated cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "description": "Optionally filter by insight type."
+        },
+        {
+          "name": "question_key",
+          "type": "string",
+          "description": "Optionally filter fixed questions by semantic key."
+        },
+        {
+          "name": "sources_limit",
+          "type": "integer",
+          "default": "10",
+          "description": "Max source URLs to return per insight."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "false",
+          "description": "When requesting multiple cryptocurrencies, pass `true` to skip unresolvable identifiers and still return the valid ones."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "1-based offset of the paginated list to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Number of results to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5CmcAiCoinsMap",
+      "method": "GET",
+      "path": "/v5/cmc-ai/coins/map",
+      "summary": "CMC AI Map",
+      "tag": "CMC AI",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "crypto_id",
+          "type": "string",
+          "description": "One or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively pass comma-separated cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "cmc_rank",
+            "crypto_id",
+            "name"
+          ],
+          "default": "cmc_rank",
+          "description": "Field used to sort the list."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "1-based offset of the paginated list to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Number of results to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5CmcAiLatest",
+      "method": "GET",
+      "path": "/v5/cmc-ai/latest",
+      "summary": "Market Feed Latest",
+      "tag": "CMC AI",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "type",
+          "type": "string",
+          "description": "Optionally filter by insight type."
+        },
+        {
+          "name": "sources_limit",
+          "type": "integer",
+          "default": "10",
+          "description": "Max source URLs to return per insight."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "1-based offset of the paginated list to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Number of results to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5CryptocurrencyDerivativesMarketPairsListLatest",
+      "method": "GET",
+      "path": "/v5/cryptocurrency/derivatives/market-pairs/list/latest",
+      "summary": "Derivative market pairs by cryptocurrency",
+      "tag": "Derivatives",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "crypto_id",
+          "type": "integer",
+          "description": "A CoinMarketCap cryptocurrency ID."
+        },
+        {
+          "name": "crypto_slug",
+          "type": "string",
+          "description": "Alternatively pass a cryptocurrency \"slug\" (URL friendly all lowercase shorthand version of name with spaces replaced with hyphens)."
+        },
+        {
+          "name": "crypto_symbol",
+          "type": "string",
+          "description": "Alternatively pass a cryptocurrency symbol."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "desc",
+          "description": "Optionally specify the sort direction."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "volume_24h_strict",
+            "cmc_rank",
+            "cmc_rank_advanced",
+            "effective_liquidity"
+          ],
+          "default": "volume_24h_strict",
+          "description": "Optionally specify the field used to sort market pairs."
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "enum": [
+            "all",
+            "perpetual",
+            "futures"
+          ],
+          "default": "all",
+          "description": "The derivative category of trading this market falls under."
+        },
+        {
+          "name": "fee_type",
+          "type": "string",
+          "enum": [
+            "all",
+            "percentage",
+            "no-fees",
+            "transactional-mining",
+            "unknown"
+          ],
+          "default": "all",
+          "description": "The fee type the exchange enforces for this market."
+        },
+        {
+          "name": "matched_id",
+          "type": "string",
+          "description": "Optionally include one or more comma-delimited fiat or cryptocurrency IDs to filter market pairs by."
+        },
+        {
+          "name": "matched_symbol",
+          "type": "string",
+          "description": "Optionally include one or more comma-delimited fiat or cryptocurrency symbols to filter market pairs by."
+        },
+        {
+          "name": "center_type",
+          "type": "string",
+          "enum": [
+            "all",
+            "cex",
+            "dex"
+          ],
+          "default": "all",
+          "description": "Optionally filter by exchange center type."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "default": "USD",
+          "description": "Optionally calculate market quotes in multiple currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5DerivativesLiquidationsCryptocurrencyListLatest",
+      "method": "GET",
+      "path": "/v5/derivatives/liquidations/cryptocurrency/list/latest",
+      "summary": "Latest Liquidations by Cryptocurrency",
+      "tag": "Derivatives",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "crypto_id",
+          "type": "string",
+          "description": "Optionally filter to one or more comma-separated CoinMarketCap cryptocurrency IDs."
+        },
+        {
+          "name": "crypto_slug",
+          "type": "string",
+          "description": "Alternatively filter by comma-separated cryptocurrency slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively filter by comma-separated cryptocurrency symbols."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "false",
+          "description": "Pass `true` to relax request validation: nonexistent identifiers in a filter list are skipped and valid ones are still returned."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "total_liquidations_1h",
+            "total_liquidations_4h",
+            "total_liquidations_24h"
+          ],
+          "default": "total_liquidations_24h",
+          "description": "Field to sort the list by (values compared in USD terms)."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "desc",
+          "description": "Direction to order against the `sort` field."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "default": "USD",
+          "description": "Optionally calculate values in up to 120 fiat or cryptocurrency conversions at once by passing a comma-separated list of symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "default": "2781",
+          "description": "Same as `convert`, but by CoinMarketCap currency ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5DerivativesLiquidationsExchangeListLatest",
+      "method": "GET",
+      "path": "/v5/derivatives/liquidations/exchange/list/latest",
+      "summary": "Latest Liquidations by Exchange",
+      "tag": "Derivatives",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "exchange_id",
+          "type": "string",
+          "description": "Optionally filter to one or more comma-separated CoinMarketCap exchange IDs."
+        },
+        {
+          "name": "exchange_slug",
+          "type": "string",
+          "description": "Alternatively filter by comma-separated exchange slugs."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "boolean",
+          "default": "false",
+          "description": "Pass `true` to relax request validation: nonexistent identifiers in a filter list are skipped and valid ones are still returned."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "total_liquidations_1h",
+            "total_liquidations_4h",
+            "total_liquidations_24h"
+          ],
+          "default": "total_liquidations_24h",
+          "description": "Field to sort the list by (values compared in USD terms)."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "desc",
+          "description": "Direction to order against the `sort` field."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "default": "USD",
+          "description": "Optionally calculate values in up to 120 fiat or cryptocurrency conversions at once by passing a comma-separated list of symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "default": "2781",
+          "description": "Same as `convert`, but by CoinMarketCap currency ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5DerivativesLiquidationsQuotesLatest",
+      "method": "GET",
+      "path": "/v5/derivatives/liquidations/quotes/latest",
+      "summary": "Latest Total Liquidations",
+      "tag": "Derivatives",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "convert",
+          "type": "string",
+          "default": "USD",
+          "description": "Optionally calculate values in up to 120 fiat or cryptocurrency conversions at once by passing a comma-separated list of symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "default": "2781",
+          "description": "Same as `convert`, but by CoinMarketCap currency ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5ExchangeDerivativesList",
+      "method": "GET",
+      "path": "/v5/exchange/derivatives/list",
+      "summary": "List derivatives exchanges",
+      "tag": "Derivatives",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "name",
+            "volume_24h",
+            "volume_24h_adjusted",
+            "exchange_score"
+          ],
+          "default": "volume_24h",
+          "description": "Optionally specify the field used to sort the list of exchanges."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "desc",
+          "description": "Optionally specify the sort direction."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in multiple currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5ExchangeDerivativesMarketPairsListLatest",
+      "method": "GET",
+      "path": "/v5/exchange/derivatives/market-pairs/list/latest",
+      "summary": "Derivative market pairs by exchange",
+      "tag": "Derivatives",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "exchange_id",
+          "type": "integer",
+          "description": "A CoinMarketCap exchange ID."
+        },
+        {
+          "name": "exchange_slug",
+          "type": "string",
+          "description": "Alternatively pass an exchange \"slug\" (URL friendly all lowercase shorthand version of name with spaces replaced with hyphens)."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "volume_24h_strict",
+            "cmc_rank",
+            "cmc_rank_advanced",
+            "effective_liquidity"
+          ],
+          "default": "volume_24h_strict",
+          "description": "Optionally specify the field used to sort market pairs."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "desc",
+          "description": "Optionally specify the sort direction."
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "enum": [
+            "all",
+            "perpetual",
+            "futures"
+          ],
+          "default": "all",
+          "description": "The derivative category of trading this market falls under."
+        },
+        {
+          "name": "fee_type",
+          "type": "string",
+          "enum": [
+            "all",
+            "percentage",
+            "no-fees",
+            "transactional-mining",
+            "unknown"
+          ],
+          "default": "all",
+          "description": "The fee type the exchange enforces for this market."
+        },
+        {
+          "name": "matched_id",
+          "type": "string",
+          "description": "Optionally include one or more comma-delimited fiat or cryptocurrency IDs to filter market pairs by."
+        },
+        {
+          "name": "matched_symbol",
+          "type": "string",
+          "description": "Optionally include one or more comma-delimited fiat or cryptocurrency symbols to filter market pairs by."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "default": "USD",
+          "description": "Optionally calculate market quotes in multiple currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5RealWorldAssetsAssetsList",
+      "method": "GET",
+      "path": "/v5/real-world-assets/assets/list",
+      "summary": "RWA List",
+      "tag": "Real World Assets",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "rwa_id",
+          "type": "string",
+          "description": "One or more comma-separated RWA asset IDs."
+        },
+        {
+          "name": "rwa_slug",
+          "type": "string",
+          "description": "Alternatively pass RWA asset slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass RWA asset symbols / tickers."
+        },
+        {
+          "name": "asset_type",
+          "type": "string",
+          "enum": [
+            "stock",
+            "commodity",
+            "currency",
+            "government_security",
+            "etf",
+            "real_estate"
+          ],
+          "description": "Optionally filter by asset type."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "rwa_rank",
+            "tokenized_market_cap",
+            "tokenized_volume_24h",
+            "average_tokenized_price",
+            "symbol"
+          ],
+          "default": "rwa_rank",
+          "description": "Optionally specify the field used to sort the list."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "asc",
+          "description": "Optionally specify the sort direction."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "string",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5RealWorldAssetsInfo",
+      "method": "GET",
+      "path": "/v5/real-world-assets/info",
+      "summary": "Metadata",
+      "tag": "Real World Assets",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "rwa_id",
+          "type": "string",
+          "description": "One or more comma-separated RWA asset IDs."
+        },
+        {
+          "name": "rwa_slug",
+          "type": "string",
+          "description": "Alternatively pass RWA asset slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass RWA asset symbols / tickers."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "string",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5RealWorldAssetsIssuers",
+      "method": "GET",
+      "path": "/v5/real-world-assets/issuers",
+      "summary": "Issuer",
+      "tag": "Real World Assets",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "issuer_id",
+          "type": "string",
+          "required": true,
+          "description": "A single issuer ID (24-char hex)."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) into the linked-tokens list."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the page size for the linked-tokens list."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5RealWorldAssetsIssuersList",
+      "method": "GET",
+      "path": "/v5/real-world-assets/issuers/list",
+      "summary": "Issuers List",
+      "tag": "Real World Assets",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "issuer_id",
+          "type": "string",
+          "description": "Optionally filter to one or more comma-separated issuer IDs (24-char hex)."
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "description": "Optionally filter by active status."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "string",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5RealWorldAssetsMap",
+      "method": "GET",
+      "path": "/v5/real-world-assets/map",
+      "summary": "RWA ID Map",
+      "tag": "Real World Assets",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "asset_type",
+          "type": "string",
+          "enum": [
+            "stock",
+            "commodity",
+            "currency",
+            "government_security",
+            "etf",
+            "real_estate"
+          ],
+          "description": "Optionally filter by asset type."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Optionally pass a comma-separated list of RWA asset symbols / tickers to return IDs for."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "rwa_id",
+            "rwa_rank",
+            "name"
+          ],
+          "default": "rwa_id",
+          "description": "Optionally specify the field used to sort the list."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5RealWorldAssetsMarketPairsList",
+      "method": "GET",
+      "path": "/v5/real-world-assets/market-pairs/list",
+      "summary": "Market Pairs",
+      "tag": "Real World Assets",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "rwa_id",
+          "type": "string",
+          "description": "A single RWA asset by `rwa_id`."
+        },
+        {
+          "name": "rwa_slug",
+          "type": "string",
+          "description": "Alternatively pass the RWA asset slug."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass the RWA asset symbol / ticker."
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "enum": [
+            "volume_24h",
+            "price"
+          ],
+          "default": "volume_24h",
+          "description": "Optionally specify the field used to sort the market pairs."
+        },
+        {
+          "name": "sort_dir",
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "desc",
+          "description": "Optionally specify the sort direction."
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "1",
+          "description": "Optionally offset the start (1-based index) of the paginated list of items to return."
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": "100",
+          "description": "Optionally specify the number of results to return."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5RealWorldAssetsQuotesLatest",
+      "method": "GET",
+      "path": "/v5/real-world-assets/quotes/latest",
+      "summary": "Quotes Latest",
+      "tag": "Real World Assets",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "rwa_id",
+          "type": "string",
+          "description": "One or more comma-separated RWA asset IDs."
+        },
+        {
+          "name": "rwa_slug",
+          "type": "string",
+          "description": "Alternatively pass RWA asset slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass RWA asset symbols / tickers."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "string",
+          "description": "Pass `true` to relax request validation rules."
+        }
+      ]
+    }
+  ]
+}
