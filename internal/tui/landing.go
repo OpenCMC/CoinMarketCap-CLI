@@ -2,6 +2,7 @@ package tui
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -120,6 +121,9 @@ func (m LandingModel) loadHero(ctx context.Context) (landingHeroCard, error) {
 	}
 	if len(card.Chart) == 0 {
 		card.ChartNote = "history unavailable"
+		if errors.Is(histErr, api.ErrKeyRequired) {
+			card.ChartNote = "7D history needs a free API key (cmc auth)"
+		}
 	}
 
 	return card, nil

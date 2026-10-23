@@ -304,7 +304,7 @@ func TestLandingChartDataLoadUsesHistory(t *testing.T) {
 			if _, err := fmt.Fprint(w, `{"data":{"coinmarketcap-20-index":{"id":1,"name":"CoinMarketCap 20","symbol":"CMC20","slug":"coinmarketcap-20-index"}}}`); err != nil {
 				t.Errorf("write info response: %v", err)
 			}
-		case "/v2/cryptocurrency/quotes/latest":
+		case "/v3/cryptocurrency/quotes/latest":
 			if _, err := fmt.Fprint(w, `{"data":{"1":{"id":1,"name":"CoinMarketCap 20","symbol":"CMC20","slug":"coinmarketcap-20-index","quote":{"USD":{"price":140.76,"volume_24h":6740000,"market_cap":0,"percent_change_24h":-0.67}}}}}`); err != nil {
 				t.Errorf("write latest quote response: %v", err)
 			}
@@ -336,7 +336,7 @@ func TestLandingChartFallbackUsesFriendlyMessage(t *testing.T) {
 			if _, err := fmt.Fprint(w, `{"data":{"coinmarketcap-20-index":{"id":1,"name":"CoinMarketCap 20","symbol":"CMC20","slug":"coinmarketcap-20-index"}}}`); err != nil {
 				t.Errorf("write info response: %v", err)
 			}
-		case "/v2/cryptocurrency/quotes/latest":
+		case "/v3/cryptocurrency/quotes/latest":
 			if _, err := fmt.Fprint(w, `{"data":{"1":{"id":1,"name":"CoinMarketCap 20","symbol":"CMC20","slug":"coinmarketcap-20-index","quote":{"USD":{"price":140.76,"volume_24h":6740000,"market_cap":0,"percent_change_24h":-0.67}}}}}`); err != nil {
 				t.Errorf("write latest quote response: %v", err)
 			}
@@ -353,4 +353,28 @@ func TestLandingChartFallbackUsesFriendlyMessage(t *testing.T) {
 	require.True(t, card.Available)
 	require.Empty(t, card.Chart)
 	require.Equal(t, "history unavailable", card.ChartNote)
+}
+
+func TestLandingChartKeylessExplainsKeyRequirement(t *testing.T) {
+	client := api.NewClientWithHTTP(&config.Config{}, &http.Client{
+		Transport: roundTripFunc(func(req *http.Request) (*http.Response, error) {
+			recorder := httptest.NewRecorder()
+			switch req.URL.Path {
+			case "/public-api/v2/cryptocurrency/info":
+				_, _ = fmt.Fprint(recorder, `{"data":{"coinmarketcap-20-index":{"id":1,"name":"CoinMarketCap 20","symbol":"CMC20","slug":"coinmarketcap-20-index"}}}`)
+			case "/public-api/v3/cryptocurrency/quotes/latest":
+				_, _ = fmt.Fprint(recorder, `{"data":[{"id":1,"name":"CoinMarketCap 20","symbol":"CMC20","quote":[{"symbol":"USD","price":140.76}]}]}`)
+			default:
+				t.Errorf("unexpected keyless request: %s", req.URL.Path)
+			}
+			return recorder.Result(), nil
+		}),
+	})
+	client.SetBaseURL("https://cmc.test")
+
+	card, err := NewLandingModel(client).loadHero(context.Background())
+	require.NoError(t, err)
+	require.True(t, card.Available)
+	require.Empty(t, card.Chart)
+	require.Equal(t, "7D history needs a free API key (cmc auth)", card.ChartNote)
 }

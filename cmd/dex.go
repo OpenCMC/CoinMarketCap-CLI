@@ -28,6 +28,12 @@ const (
 
 var dexNow = time.Now
 
+var dexCmd = &cobra.Command{
+	Use:   "dex",
+	Short: "DEX spot pairs and single-pair snapshots",
+	Long:  "Look up DEX spot pairs by network and DEX, or one pair by contract address. Both work without an API key.",
+}
+
 var dexNetworksCmd = &cobra.Command{
 	Use:   "networks",
 	Short: "List supported DEX networks",
@@ -49,10 +55,10 @@ var dexSearchCmd = &cobra.Command{
 
 var dexPairsCmd = &cobra.Command{
 	Use:   "pairs",
-	Short: "List DEX spot pairs for a network",
-	Example: `  cmc dex pairs --network ethereum
-  cmc dex pairs --network 1 --token 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48 --limit 25
-  cmc dex pairs --network ethereum -o table`,
+	Short: "List spot pairs for a DEX on a network",
+	Example: `  cmc dex pairs --network ethereum --dex-slug uniswap-v3
+  cmc dex pairs --network 1 --dex-slug uniswap-v3 --token 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48 --limit 25
+  cmc dex pairs --network ethereum --dex-slug uniswap-v3 -o table`,
 	RunE: runDEXPairs,
 }
 
@@ -144,7 +150,17 @@ func init() {
 	dexTrendingCmd.Flags().Int("limit", dexDefaultTrendingLimit, "Maximum number of pairs to return")
 	dexTrendingCmd.Flags().String("convert-id", dexDefaultConvertID, "Conversion currency id")
 
-	// DEX commands remain internal implementation details only and are not exposed in the public CLI surface.
+	addOutputFlag(dexPairsCmd)
+	addDryRunFlag(dexPairsCmd)
+	addOutputFlag(dexPairCmd)
+	addDryRunFlag(dexPairCmd)
+
+	// Only pairs and pair are public. networks, search, ohlcv and trades call
+	// /v4/dex endpoints that the spec files under Deprecated and that currently
+	// return errors, and trending needs a DEX it does not take. They stay
+	// unregistered until they move to the /v1/dex and /v1/k-line endpoints.
+	dexCmd.AddCommand(dexPairsCmd, dexPairCmd)
+	rootCmd.AddCommand(dexCmd)
 }
 
 func runDEXNetworks(cmd *cobra.Command, args []string) error {
@@ -285,8 +301,12 @@ func runDEXPairs(cmd *cobra.Command, args []string) error {
 	if !jsonOut {
 		display.PrintBanner()
 	}
-	if strings.TrimSpace(network) == "" {
-		return fmt.Errorf("--network is required")
+	networkID, networkSlug, err := dexNetworkSelector(network)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(dexID) == "" && strings.TrimSpace(dexSlug) == "" {
+		return fmt.Errorf("--dex-id or --dex-slug is required: the API lists spot pairs per DEX")
 	}
 
 	cfg, err := loadConfig()
@@ -294,17 +314,13 @@ func runDEXPairs(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	if isDryRun(cmd) {
-		networkID, err := dryResolveNetwork(network)
-		if err != nil {
-			return err
-		}
 		params := map[string]string{
-			"network_id": networkID,
 			"limit":      strconv.Itoa(limit),
 			"sort":       sortField,
 			"sort_dir":   sortDir,
 			"convert_id": convertID,
 		}
+		addDEXNetworkParam(params, networkID, networkSlug)
 		if dexID != "" {
 			params["dex_id"] = dexID
 		}
@@ -321,12 +337,9 @@ func runDEXPairs(cmd *cobra.Command, args []string) error {
 	}
 
 	client := newAPIClient(cfg)
-	networkID, err := resolveDEXNetworkID(cmd.Context(), client, network)
-	if err != nil {
-		return err
-	}
 	resp, err := client.DEXSpotPairsLatest(cmd.Context(), api.DEXSpotPairsLatestRequest{
 		NetworkID:       networkID,
+		NetworkSlug:     networkSlug,
 		DEXID:           dexID,
 		DEXSlug:         dexSlug,
 		ContractAddress: address,
@@ -340,6 +353,10 @@ func runDEXPairs(cmd *cobra.Command, args []string) error {
 	}
 	if token != "" {
 		resp.Data = filterDEXPairsByToken(resp.Data, token)
+	}
+	// The API returns a fixed page of 100 whatever limit is sent.
+	if limit > 0 && len(resp.Data) > limit {
+		resp.Data = resp.Data[:limit]
 	}
 	if jsonOut {
 		return printJSONRaw(resp.Data)
@@ -361,8 +378,9 @@ func runDEXPair(cmd *cobra.Command, args []string) error {
 	if pairAddress == "" {
 		pairAddress = address
 	}
-	if strings.TrimSpace(network) == "" {
-		return fmt.Errorf("--network is required")
+	networkID, networkSlug, err := dexNetworkSelector(network)
+	if err != nil {
+		return err
 	}
 	if strings.TrimSpace(pairAddress) == "" {
 		return fmt.Errorf("--pair is required")
@@ -373,24 +391,18 @@ func runDEXPair(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	if isDryRun(cmd) {
-		networkID, err := dryResolveNetwork(network)
-		if err != nil {
-			return err
-		}
-		return printDryRun(cfg, "dex pair", "/v4/dex/pairs/quotes/latest", map[string]string{
-			"network_id":       networkID,
+		params := map[string]string{
 			"contract_address": pairAddress,
 			"convert_id":       convertID,
-		}, nil)
+		}
+		addDEXNetworkParam(params, networkID, networkSlug)
+		return printDryRun(cfg, "dex pair", "/v4/dex/pairs/quotes/latest", params, nil)
 	}
 
 	client := newAPIClient(cfg)
-	networkID, err := resolveDEXNetworkID(cmd.Context(), client, network)
-	if err != nil {
-		return err
-	}
 	pairs, err := client.DEXPairQuotesLatest(cmd.Context(), api.DEXPairLookupRequest{
 		NetworkID:       networkID,
+		NetworkSlug:     networkSlug,
 		ContractAddress: pairAddress,
 		ConvertID:       convertID,
 	})
@@ -654,6 +666,27 @@ func resolveDEXNetworkID(ctx context.Context, client *api.Client, value string) 
 		start += dexNetworkPageLimit
 	}
 	return "", fmt.Errorf("network %q not found (%w)", value, api.ErrAssetNotFound)
+}
+
+// dexNetworkSelector maps --network to the API's network_id (numeric) or
+// network_slug. The API accepts both, so no lookup request is needed.
+func dexNetworkSelector(value string) (id, slug string, err error) {
+	value = strings.TrimSpace(value)
+	if value == "" {
+		return "", "", fmt.Errorf("--network is required")
+	}
+	if _, err := strconv.ParseInt(value, 10, 64); err == nil {
+		return value, "", nil
+	}
+	return "", strings.ToLower(value), nil
+}
+
+func addDEXNetworkParam(params map[string]string, id, slug string) {
+	if id != "" {
+		params["network_id"] = id
+		return
+	}
+	params["network_slug"] = slug
 }
 
 func dryResolveNetwork(value string) (string, error) {

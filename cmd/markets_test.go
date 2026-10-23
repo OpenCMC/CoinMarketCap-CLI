@@ -29,7 +29,7 @@ func TestMarkets_DryRun(t *testing.T) {
 	assert.Equal(t, "USD", out.Params["convert"])
 	assert.Equal(t, "1", out.Params["start"])
 	assert.Equal(t, "100", out.Params["limit"])
-	assert.Contains(t, out.URL, "/v1/cryptocurrency/listings/latest")
+	assert.Contains(t, out.URL, "/v3/cryptocurrency/listings/latest")
 }
 
 func TestMarkets_DryRun_WithCategory(t *testing.T) {
@@ -61,7 +61,7 @@ func TestMarkets_DryRun_WithCategory(t *testing.T) {
 
 func TestMarkets_JSONOutput(t *testing.T) {
 	srv := newTestServer(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "/v1/cryptocurrency/listings/latest", r.URL.Path)
+		assert.Equal(t, "/v3/cryptocurrency/listings/latest", r.URL.Path)
 		assert.Equal(t, "USD", r.URL.Query().Get("convert"))
 		assert.Equal(t, "1", r.URL.Query().Get("start"))
 		assert.Equal(t, "100", r.URL.Query().Get("limit"))
@@ -155,7 +155,7 @@ func TestMarkets_TotalAutoPagination(t *testing.T) {
 	callCount := 0
 	srv := newTestServer(func(w http.ResponseWriter, r *http.Request) {
 		callCount++
-		assert.Equal(t, "/v1/cryptocurrency/listings/latest", r.URL.Path)
+		assert.Equal(t, "/v3/cryptocurrency/listings/latest", r.URL.Path)
 		switch callCount {
 		case 1:
 			assert.Equal(t, "11", r.URL.Query().Get("start"))
@@ -238,8 +238,8 @@ func TestMarkets_CommandsCatalogMetadata(t *testing.T) {
 		}
 	}
 	require.True(t, found, "markets command should be present in catalog")
-	assert.Equal(t, "/v1/cryptocurrency/listings/latest", info.APIEndpoint)
-	assert.Equal(t, "getV1CryptocurrencyListingsLatest", info.OASOperationID)
+	assert.Equal(t, "/v3/cryptocurrency/listings/latest", info.APIEndpoint)
+	assert.Equal(t, "getV3CryptocurrencyListingsLatest", info.OASOperationID)
 
 	flags := map[string]flagInfo{}
 	for _, flag := range info.Flags {

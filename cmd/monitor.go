@@ -21,6 +21,10 @@ import (
 
 var runMonitorLoop = defaultRunMonitorLoop
 
+// keylessMinMonitorInterval keeps keyless polling well inside the shared
+// IP-based rate pool.
+const keylessMinMonitorInterval = 30 * time.Second
+
 var monitorCmd = &cobra.Command{
 	Use:   "monitor",
 	Short: "Poll latest quotes on a fixed interval",
@@ -83,6 +87,10 @@ func runMonitor(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+	if cfg.IsKeyless() && interval < keylessMinMonitorInterval {
+		warnf("Warning: keyless mode polls at most every %s; using --interval %s. Add a free API key with `cmc auth` to poll faster.\n", keylessMinMonitorInterval, keylessMinMonitorInterval)
+		interval = keylessMinMonitorInterval
+	}
 
 	if isDryRun(cmd) {
 		params := map[string]string{
@@ -97,7 +105,7 @@ func runMonitor(cmd *cobra.Command, args []string) error {
 		default:
 			params["symbol"] = symbolStr
 		}
-		return printDryRunFull(cfg, "monitor", "", "/v2/cryptocurrency/quotes/latest", params, nil, "Polling command; emits one JSON object per asset per poll.")
+		return printDryRunFull(cfg, "monitor", "", "/v3/cryptocurrency/quotes/latest", params, nil, "Polling command; emits one JSON object per asset per poll.")
 	}
 
 	client := newAPIClient(cfg)

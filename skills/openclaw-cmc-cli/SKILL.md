@@ -6,8 +6,6 @@ metadata:
   requires:
     bins:
       - cmc
-    env:
-      - CMC_API_KEY
   install: |
     go install github.com/openCMC/CoinMarketCap-CLI@latest
     mv "$(go env GOPATH)/bin/coinmarketcap-cli" "$(go env GOPATH)/bin/cmc"
@@ -19,12 +17,9 @@ Use this as a thin entrypoint for OpenClaw. Keep it aligned with the core [cmc-c
 
 ## Prerequisites
 
-This skill requires:
-- `cmc` CLI installed and available on PATH — see [CoinMarketCap CLI](https://github.com/openCMC/CoinMarketCap-CLI) for installation options
-- `CMC_API_KEY` environment variable set with a valid CoinMarketCap API key
-- Authentication completed via `cmc auth`
+This skill requires `cmc` installed and on PATH — see [CoinMarketCap CLI](https://github.com/openCMC/CoinMarketCap-CLI) for installation options.
 
-If either dependency is missing, the skill will not function.
+An API key is optional. Without one, `cmc` uses the Keyless Public API: `price`, `markets`, `metrics`, `resolve`, `search`, `monitor`, `dex pair`, `dex pairs` and the endpoints in `cmc api --list --keyless` work. `trending`, `top-gainers-losers`, `history`, `news`, `pairs` and `price --with-chain-stats` need a free key: set `CMC_API_KEY` or run `cmc auth`. `cmc commands` shows `requires_auth` for every command.
 
 ## Guidance
 

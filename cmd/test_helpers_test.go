@@ -148,7 +148,12 @@ func newTestServer(handler http.HandlerFunc) *httptest.Server {
 // resetAllFlags resets all flags on a command and its children to their default values.
 func resetAllFlags(cmd *cobra.Command) {
 	cmd.Flags().VisitAll(func(f *pflag.Flag) {
-		_ = f.Value.Set(f.DefValue)
+		// Set on a slice flag appends, so "[]" would become an element.
+		if sv, ok := f.Value.(pflag.SliceValue); ok {
+			_ = sv.Replace(nil)
+		} else {
+			_ = f.Value.Set(f.DefValue)
+		}
 		f.Changed = false
 	})
 	for _, c := range cmd.Commands() {

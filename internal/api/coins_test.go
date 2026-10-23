@@ -71,7 +71,7 @@ func TestTrendingLatest(t *testing.T) {
 
 func TestListingsLatest(t *testing.T) {
 	c, srv := testClient(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "/v1/cryptocurrency/listings/latest", r.URL.Path)
+		assert.Equal(t, "/v3/cryptocurrency/listings/latest", r.URL.Path)
 		q := r.URL.Query()
 		assert.Equal(t, "1", q.Get("start"))
 		assert.Equal(t, "100", q.Get("limit"))
@@ -172,7 +172,7 @@ func TestResolveCategoryID_BySlugLikeToken(t *testing.T) {
 
 func TestQuotesLatestByID(t *testing.T) {
 	c, srv := testClient(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "/v2/cryptocurrency/quotes/latest", r.URL.Path)
+		assert.Equal(t, "/v3/cryptocurrency/quotes/latest", r.URL.Path)
 		q := r.URL.Query()
 		assert.Equal(t, "1,1027", q.Get("id"))
 		assert.Equal(t, "USD", q.Get("convert"))
@@ -196,7 +196,7 @@ func TestQuotesLatestByID(t *testing.T) {
 
 func TestQuotesLatestBySlug(t *testing.T) {
 	c, srv := testClient(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "/v2/cryptocurrency/quotes/latest", r.URL.Path)
+		assert.Equal(t, "/v3/cryptocurrency/quotes/latest", r.URL.Path)
 		q := r.URL.Query()
 		assert.Equal(t, "bitcoin,ethereum", q.Get("slug"))
 		assert.Equal(t, "USD", q.Get("convert"))
@@ -217,7 +217,7 @@ func TestQuotesLatestBySlug(t *testing.T) {
 
 func TestQuotesLatestBySymbol(t *testing.T) {
 	c, srv := testClient(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "/v2/cryptocurrency/quotes/latest", r.URL.Path)
+		assert.Equal(t, "/v3/cryptocurrency/quotes/latest", r.URL.Path)
 		q := r.URL.Query()
 		assert.Equal(t, "BTC,ETH", q.Get("symbol"))
 		assert.Equal(t, "USD", q.Get("convert"))

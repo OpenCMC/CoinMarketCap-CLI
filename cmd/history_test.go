@@ -18,12 +18,15 @@ import (
 )
 
 func TestHistory_RequiresIdentityFlag(t *testing.T) {
+	// Flag validation runs after the keyless gate, so these need a key.
+	withStubLoadConfig(t, &config.Config{APIKey: "test-key"})
 	_, _, err := executeCommand(t, "history", "--date", "2024-01-01", "-o", "json")
 	require.Error(t, err)
 	assert.Contains(t, err.Error(), "specify exactly one of --id, --slug, or --symbol")
 }
 
 func TestHistory_RequiresExactlyOneMode(t *testing.T) {
+	withStubLoadConfig(t, &config.Config{APIKey: "test-key"})
 	_, _, err := executeCommand(t, "history", "--id", "1", "--date", "2024-01-01", "--days", "7", "-o", "json")
 	require.Error(t, err)
 	assert.Contains(t, err.Error(), "specify exactly one mode")

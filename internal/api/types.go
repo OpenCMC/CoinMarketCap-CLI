@@ -1,6 +1,10 @@
 package api
 
-import "encoding/json"
+import (
+	"bytes"
+	"encoding/json"
+	"strconv"
+)
 
 // CMC listings/latest response types
 type ListingsLatestResponse struct {
@@ -40,12 +44,12 @@ type CategoryDetail struct {
 }
 
 type ListingCoin struct {
-	ID      int64             `json:"id"`
-	Name    string            `json:"name"`
-	Symbol  string            `json:"symbol"`
-	Slug    string            `json:"slug"`
-	CMCRank int               `json:"cmc_rank"`
-	Quote   map[string]Quote2 `json:"quote"`
+	ID      int64            `json:"id"`
+	Name    string           `json:"name"`
+	Symbol  string           `json:"symbol"`
+	Slug    string           `json:"slug"`
+	CMCRank int              `json:"cmc_rank"`
+	Quote   QuoteMap[Quote2] `json:"quote"`
 }
 
 type Quote2 struct {
@@ -60,15 +64,74 @@ type Quote2 struct {
 
 // CMC quotes/latest response types
 type QuotesLatestResponse struct {
-	Data map[string]QuoteCoin `json:"data"`
+	Data QuoteCoins `json:"data"`
+}
+
+// QuoteCoins holds quotes keyed by CMC ID. It decodes both the v2 object keyed
+// by ID and the v3 array, so output keeps the v2 shape.
+type QuoteCoins map[string]QuoteCoin
+
+func (m *QuoteCoins) UnmarshalJSON(b []byte) error {
+	out, err := decodeKeyed[QuoteCoin](b, func(item json.RawMessage) (string, error) {
+		var key struct {
+			ID int64 `json:"id"`
+		}
+		err := json.Unmarshal(item, &key)
+		return strconv.FormatInt(key.ID, 10), err
+	})
+	*m = out
+	return err
 }
 
 type QuoteCoin struct {
-	ID     int64            `json:"id"`
-	Name   string           `json:"name"`
-	Symbol string           `json:"symbol"`
-	Slug   string           `json:"slug"`
-	Quote  map[string]Quote `json:"quote"`
+	ID     int64           `json:"id"`
+	Name   string          `json:"name"`
+	Symbol string          `json:"symbol"`
+	Slug   string          `json:"slug"`
+	Quote  QuoteMap[Quote] `json:"quote"`
+}
+
+// QuoteMap holds quotes keyed by convert symbol ("USD"). It decodes both the
+// v1/v2 object and the v3 array of quotes that carry a "symbol" field.
+type QuoteMap[T any] map[string]T
+
+func (m *QuoteMap[T]) UnmarshalJSON(b []byte) error {
+	out, err := decodeKeyed[T](b, func(item json.RawMessage) (string, error) {
+		var key struct {
+			Symbol string `json:"symbol"`
+		}
+		err := json.Unmarshal(item, &key)
+		return key.Symbol, err
+	})
+	*m = out
+	return err
+}
+
+// decodeKeyed decodes a JSON object, or a JSON array whose items are keyed by keyOf, into a map.
+func decodeKeyed[T any](b []byte, keyOf func(json.RawMessage) (string, error)) (map[string]T, error) {
+	b = bytes.TrimSpace(b)
+	if len(b) == 0 || b[0] != '[' {
+		var obj map[string]T
+		err := json.Unmarshal(b, &obj)
+		return obj, err
+	}
+	var items []json.RawMessage
+	if err := json.Unmarshal(b, &items); err != nil {
+		return nil, err
+	}
+	out := make(map[string]T, len(items))
+	for _, item := range items {
+		key, err := keyOf(item)
+		if err != nil {
+			return nil, err
+		}
+		var v T
+		if err := json.Unmarshal(item, &v); err != nil {
+			return nil, err
+		}
+		out[key] = v
+	}
+	return out, nil
 }
 
 type Quote struct {

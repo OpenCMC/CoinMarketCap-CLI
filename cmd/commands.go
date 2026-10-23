@@ -3,60 +3,90 @@ package cmd
 import (
 	"strings"
 
+	"github.com/openCMC/CoinMarketCap-CLI/internal/spec"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
 
-const oasRepo = "https://coinmarketcap.com/api/documentation/v1/"
+// oasRepo points agents at the published spec the CLI's operation index is generated from.
+const oasRepo = spec.SourceURL
 
+// commandAnnotation lists the endpoints a command calls. Operation IDs and
+// requires_auth are not hard-coded: they come from the embedded spec index.
 type commandAnnotation struct {
-	APIEndpoint     string
-	APIEndpoints    map[string]string
-	OASOperationID  string
-	OASOperationIDs map[string]string
-	OASSpec         string
-	Transport       string // "rest" (default) or "websocket"
-	PaidOnly        bool
-	RequiresAuth    bool
+	APIEndpoint  string
+	APIEndpoints map[string]string
+	Transport    string // "rest" (default) or "websocket"
+	PaidOnly     bool
+}
+
+// endpoints returns every endpoint the command can call.
+func (a commandAnnotation) endpoints() []string {
+	out := make([]string, 0, len(a.APIEndpoints)+1)
+	if a.APIEndpoint != "" {
+		out = append(out, a.APIEndpoint)
+	}
+	for _, ep := range a.APIEndpoints {
+		out = append(out, ep)
+	}
+	return out
+}
+
+// requiresAuth reports whether the command needs an API key: true unless at
+// least one of its endpoints is served by the Keyless Public API. Modes that
+// call a key-only endpoint (for example price --with-chain-stats) are stopped
+// by the API client before any request is sent.
+func (a commandAnnotation) requiresAuth() bool {
+	for _, ep := range a.endpoints() {
+		if spec.IsKeyless(ep) {
+			return false
+		}
+	}
+	return true
+}
+
+// operationID returns the spec operationId for an endpoint path, or "" if the
+// spec does not document it.
+func operationID(endpoint string) string {
+	op, ok := spec.Lookup(endpoint)
+	if !ok {
+		return ""
+	}
+	return op.OperationID
+}
+
+func operationIDs(endpoints map[string]string) map[string]string {
+	if len(endpoints) == 0 {
+		return nil
+	}
+	out := make(map[string]string, len(endpoints))
+	for key, ep := range endpoints {
+		out[key] = operationID(ep)
+	}
+	return out
 }
 
 var commandMeta = map[string]commandAnnotation{
 	"price": {
-		APIEndpoint: "/v2/cryptocurrency/quotes/latest",
+		APIEndpoint: "/v3/cryptocurrency/quotes/latest",
 		APIEndpoints: map[string]string{
-			"explicit":              "/v2/cryptocurrency/quotes/latest",
+			"explicit":              "/v3/cryptocurrency/quotes/latest",
 			"with-info":             "/v2/cryptocurrency/info",
 			"with-chain-stats":      "/v1/blockchain/statistics/latest",
 			"positional_slug_first": "/v2/cryptocurrency/info",
 			"positional_symbol":     "/v1/cryptocurrency/map",
 		},
-		OASOperationID: "getV2CryptocurrencyQuotesLatest",
-		OASOperationIDs: map[string]string{
-			"explicit":              "getV2CryptocurrencyQuotesLatest",
-			"with-info":             "getV2CryptocurrencyInfo",
-			"with-chain-stats":      "getV1BlockchainStatisticsLatest",
-			"positional_slug_first": "getV2CryptocurrencyInfo",
-			"positional_symbol":     "cryptocurrency-map",
-		},
-		OASSpec:      "coinmarketcap-v1",
-		RequiresAuth: true,
 	},
 	"metrics": {
-		APIEndpoint:    "/v1/global-metrics/quotes/latest",
-		OASOperationID: "cmc_get_global_metrics_latest",
-		OASSpec:        "coinmarketcap-v1",
-		RequiresAuth:   true,
+		APIEndpoint: "/v1/global-metrics/quotes/latest",
 	},
 	"markets": {
-		APIEndpoint: "/v1/cryptocurrency/listings/latest",
+		APIEndpoint: "/v3/cryptocurrency/listings/latest",
 		APIEndpoints: map[string]string{
-			"default":         "/v1/cryptocurrency/listings/latest",
+			"default":         "/v3/cryptocurrency/listings/latest",
 			"category_lookup": "/v1/cryptocurrency/categories",
 			"category":        "/v1/cryptocurrency/category",
 		},
-		OASOperationID: "getV1CryptocurrencyListingsLatest",
-		OASSpec:        "coinmarketcap-v1",
-		RequiresAuth:   true,
 	},
 	"resolve": {
 		APIEndpoints: map[string]string{
@@ -64,26 +94,13 @@ var commandMeta = map[string]commandAnnotation{
 			"slug":   "/v2/cryptocurrency/info",
 			"symbol": "/v1/cryptocurrency/map",
 		},
-		OASOperationIDs: map[string]string{
-			"id":     "getV2CryptocurrencyInfo",
-			"slug":   "getV2CryptocurrencyInfo",
-			"symbol": "cryptocurrency-map",
-		},
-		OASSpec:      "coinmarketcap-v1",
-		RequiresAuth: true,
 	},
 	"trending": {
-		APIEndpoint:    "/v1/cryptocurrency/trending/latest",
-		OASOperationID: "getV1CryptocurrencyTrendingLatest",
-		OASSpec:        "coinmarketcap-v1",
-		Transport:      "rest",
-		RequiresAuth:   true,
+		APIEndpoint: "/v1/cryptocurrency/trending/latest",
+		Transport:   "rest",
 	},
 	"news": {
-		APIEndpoint:    "/v1/content/latest",
-		OASOperationID: "getV1ContentLatest",
-		OASSpec:        "coinmarketcap-v1",
-		RequiresAuth:   true,
+		APIEndpoint: "/v1/content/latest",
 	},
 	"history": {
 		APIEndpoints: map[string]string{
@@ -94,34 +111,17 @@ var commandMeta = map[string]commandAnnotation{
 			"--from/--to":        "/v1/cryptocurrency/quotes/historical",
 			"--from/--to --ohlc": "/v2/cryptocurrency/ohlcv/historical",
 		},
-		OASOperationIDs: map[string]string{
-			"--date":             "getV1CryptocurrencyQuotesHistorical",
-			"--days":             "getV1CryptocurrencyQuotesHistorical",
-			"--date --ohlc":      "getV2CryptocurrencyOhlcvHistorical",
-			"--days --ohlc":      "getV2CryptocurrencyOhlcvHistorical",
-			"--from/--to":        "getV1CryptocurrencyQuotesHistorical",
-			"--from/--to --ohlc": "getV2CryptocurrencyOhlcvHistorical",
-		},
-		OASSpec:      "coinmarketcap-v1",
-		RequiresAuth: true,
 	},
 	"top-gainers-losers": {
-		APIEndpoint:    "/v1/cryptocurrency/trending/gainers-losers",
-		OASOperationID: "getV1CryptocurrencyTrendingGainersLosers",
-		OASSpec:        "coinmarketcap-v1",
-		Transport:      "rest",
-		RequiresAuth:   true,
+		APIEndpoint: "/v1/cryptocurrency/trending/gainers-losers",
+		Transport:   "rest",
 	},
 	"pairs": {
-		APIEndpoint:    "/v1/cryptocurrency/market-pairs/latest",
-		OASOperationID: "getV1CryptocurrencyMarketPairsLatest",
-		OASSpec:        "coinmarketcap-v1",
-		RequiresAuth:   true,
+		APIEndpoint: "/v1/cryptocurrency/market-pairs/latest",
 	},
 	"monitor": {
-		APIEndpoint:  "/v2/cryptocurrency/quotes/latest",
-		Transport:    "rest",
-		RequiresAuth: true,
+		APIEndpoint: "/v3/cryptocurrency/quotes/latest",
+		Transport:   "rest",
 	},
 	"search": {
 		APIEndpoints: map[string]string{
@@ -129,9 +129,13 @@ var commandMeta = map[string]commandAnnotation{
 			"address_pair":  "/v4/dex/pairs/quotes/latest",
 			"address_token": "/v4/dex/spot-pairs/latest",
 		},
-		OASSpec:      "coinmarketcap-v1",
-		Transport:    "rest",
-		RequiresAuth: true,
+		Transport: "rest",
+	},
+	"dex pairs": {
+		APIEndpoint: "/v4/dex/spot-pairs/latest",
+	},
+	"dex pair": {
+		APIEndpoint: "/v4/dex/pairs/quotes/latest",
 	},
 }
 
@@ -252,13 +256,7 @@ func runCommands(cmd *cobra.Command, args []string) error {
 					RequiresAuth:  true,
 				}
 				if meta, ok := commandMeta[info.Name]; ok {
-					info.PaidOnly = meta.PaidOnly
-					info.RequiresAuth = meta.RequiresAuth
-					info.Transport = meta.Transport
-					info.APIEndpoint = meta.APIEndpoint
-					info.APIEndpoints = meta.APIEndpoints
-					info.OASOperationID = meta.OASOperationID
-					info.OASOperationIDs = meta.OASOperationIDs
+					applyCommandMeta(&info, meta)
 				}
 				catalog.Commands = append(catalog.Commands, info)
 			}
@@ -273,21 +271,29 @@ func runCommands(cmd *cobra.Command, args []string) error {
 			OutputFormats: []string{"json", "table"},
 			RequiresAuth:  true,
 		}
+		if c == apiCmd {
+			// Depends on the endpoint; `cmc api --list --keyless` lists the keyless ones.
+			info.RequiresAuth = false
+		}
 
 		if meta, ok := commandMeta[c.Name()]; ok {
-			info.PaidOnly = meta.PaidOnly
-			info.RequiresAuth = meta.RequiresAuth
-			info.Transport = meta.Transport
-			info.APIEndpoint = meta.APIEndpoint
-			info.APIEndpoints = meta.APIEndpoints
-			info.OASOperationID = meta.OASOperationID
-			info.OASOperationIDs = meta.OASOperationIDs
+			applyCommandMeta(&info, meta)
 		}
 
 		catalog.Commands = append(catalog.Commands, info)
 	}
 
 	return printJSONRaw(catalog)
+}
+
+func applyCommandMeta(info *commandInfo, meta commandAnnotation) {
+	info.PaidOnly = meta.PaidOnly
+	info.RequiresAuth = meta.requiresAuth()
+	info.Transport = meta.Transport
+	info.APIEndpoint = meta.APIEndpoint
+	info.APIEndpoints = meta.APIEndpoints
+	info.OASOperationID = operationID(meta.APIEndpoint)
+	info.OASOperationIDs = operationIDs(meta.APIEndpoints)
 }
 
 func extractFlags(cmd *cobra.Command) []flagInfo {

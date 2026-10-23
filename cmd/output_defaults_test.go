@@ -46,7 +46,7 @@ func TestOutputDefault_Markets_WithoutOutputFlag_CompactJSON(t *testing.T) {
 
 func TestOutputDefault_Price_WithoutOutputFlag_CompactJSON(t *testing.T) {
 	srv := newTestServer(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, "/v2/cryptocurrency/quotes/latest", r.URL.Path)
+		assert.Equal(t, "/v3/cryptocurrency/quotes/latest", r.URL.Path)
 		assert.Equal(t, "1", r.URL.Query().Get("id"))
 		resp := api.QuotesLatestResponse{
 			Data: map[string]api.QuoteCoin{

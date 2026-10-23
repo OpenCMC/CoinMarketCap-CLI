@@ -1,7 +1,10 @@
 package cmd
 
 import (
+	"encoding/json"
+
 	"github.com/openCMC/CoinMarketCap-CLI/internal/config"
+	"github.com/openCMC/CoinMarketCap-CLI/internal/spec"
 	"github.com/spf13/cobra"
 )
 
@@ -19,6 +22,7 @@ type dryRunOutput struct {
 	URL            string            `json:"url"`
 	Params         map[string]string `json:"params"`
 	Headers        map[string]string `json:"headers"`
+	Body           json.RawMessage   `json:"body,omitempty"`
 	OASOperationID string            `json:"oas_operation_id,omitempty"`
 	OASSpec        string            `json:"oas_spec,omitempty"`
 	Note           string            `json:"note,omitempty"`
@@ -59,13 +63,9 @@ func printDryRunFull(cfg *config.Config, cmdName, opKey, endpoint string, params
 		Pagination: pagination,
 	}
 
-	if meta, ok := commandMeta[cmdName]; ok {
-		out.OASSpec = meta.OASSpec
-		if opKey != "" && meta.OASOperationIDs != nil {
-			out.OASOperationID = meta.OASOperationIDs[opKey]
-		} else {
-			out.OASOperationID = meta.OASOperationID
-		}
+	if _, ok := commandMeta[cmdName]; ok {
+		out.OASSpec = spec.SourceURL
+		out.OASOperationID = operationID(endpoint)
 	}
 
 	return printJSONRaw(out)
@@ -95,11 +95,9 @@ func printDryRunMulti(cfg *config.Config, cmdName string, requests []struct {
 			Params:  req.params,
 			Headers: headers,
 		}
-		if meta, ok := commandMeta[cmdName]; ok {
-			outs[i].OASSpec = meta.OASSpec
-			if req.opKey != "" && meta.OASOperationIDs != nil {
-				outs[i].OASOperationID = meta.OASOperationIDs[req.opKey]
-			}
+		if _, ok := commandMeta[cmdName]; ok {
+			outs[i].OASSpec = spec.SourceURL
+			outs[i].OASOperationID = operationID(req.endpoint)
 		}
 	}
 

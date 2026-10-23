@@ -21,6 +21,9 @@ const (
 	cmcBaseURL   = "https://pro-api.coinmarketcap.com"
 	cmcHeaderKey = "X-CMC_PRO_API_KEY"
 
+	// KeylessPathPrefix is prepended to every path in keyless mode.
+	KeylessPathPrefix = "/public-api"
+
 	// Compatibility aliases used by untouched command/tests in later batches.
 	TierDemo = TierBasic
 	TierPaid = TierHobbyist
@@ -100,7 +103,16 @@ func Save(cfg *Config) error {
 	return os.Chmod(path, 0o600)
 }
 
+// IsKeyless reports whether no API key is configured. Requests then go to the
+// Keyless Public API and are limited to the endpoints it serves.
+func (c *Config) IsKeyless() bool {
+	return strings.TrimSpace(c.APIKey) == ""
+}
+
 func (c *Config) BaseURL() string {
+	if c.IsKeyless() {
+		return cmcBaseURL + KeylessPathPrefix
+	}
 	return cmcBaseURL
 }
 
