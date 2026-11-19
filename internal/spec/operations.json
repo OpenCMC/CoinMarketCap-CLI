@@ -1,7 +1,7 @@
 {
   "source": "https://coinmarketcap.com/api/documentation/openapi.json",
   "spec_version": "3.0.3",
-  "sha256": "855b21bbfbb3ce4c91f514467e291bcf97f0a3d043df250fe6ec03fe5ed23e0b",
+  "sha256": "a8d5912d5c5dd83460eceb391059b4d473dc8af23729b83d1fed3609d8d67011",
   "operations": [
     {
       "operation_id": "getV1AltcoinSeasonIndexHistorical",
@@ -2896,10 +2896,10 @@
       "operation_id": "getV2CryptocurrencyOhlcvHistorical",
       "method": "GET",
       "path": "/v2/cryptocurrency/ohlcv/historical",
-      "summary": "OHLCV Historical",
-      "tag": "Cryptocurrency",
+      "summary": "OHLCV Historical v2 (deprecated)",
+      "tag": "Deprecated",
       "keyless": false,
-      "deprecated": false,
+      "deprecated": true,
       "params": [
         {
           "name": "id",
@@ -4471,6 +4471,63 @@
       ]
     },
     {
+      "operation_id": "getV5CryptocurrencyOhlcvHistorical",
+      "method": "GET",
+      "path": "/v5/cryptocurrency/ohlcv/historical",
+      "summary": "OHLCV Historical",
+      "tag": "Cryptocurrency",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "One CoinMarketCap cryptocurrency ID."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "description": "Alternatively, one cryptocurrency slug."
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "15m",
+            "1h",
+            "4h",
+            "1d",
+            "1w",
+            "1M"
+          ],
+          "description": "Candle period."
+        },
+        {
+          "name": "time_start",
+          "type": "string",
+          "description": "Start of the window, inclusive, as a Unix timestamp or ISO 8601."
+        },
+        {
+          "name": "time_end",
+          "type": "string",
+          "description": "End of the window, inclusive, as a Unix timestamp or ISO 8601."
+        },
+        {
+          "name": "count",
+          "type": "integer",
+          "default": "10",
+          "description": "Number of candle periods to return, from 1 to 10000."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "default": "2781",
+          "description": "One CoinMarketCap currency ID to return prices, volume and market cap in."
+        }
+      ]
+    },
+    {
       "operation_id": "getV5DerivativesLiquidationsCryptocurrencyListLatest",
       "method": "GET",
       "path": "/v5/derivatives/liquidations/cryptocurrency/list/latest",
@@ -4542,7 +4599,6 @@
         {
           "name": "convert_id",
           "type": "string",
-          "default": "2781",
           "description": "Same as `convert`, but by CoinMarketCap currency ID instead of symbol."
         }
       ]
@@ -4614,7 +4670,6 @@
         {
           "name": "convert_id",
           "type": "string",
-          "default": "2781",
           "description": "Same as `convert`, but by CoinMarketCap currency ID instead of symbol."
         }
       ]
@@ -4637,7 +4692,6 @@
         {
           "name": "convert_id",
           "type": "string",
-          "default": "2781",
           "description": "Same as `convert`, but by CoinMarketCap currency ID instead of symbol."
         }
       ]
@@ -5101,6 +5155,96 @@
           "name": "convert_id",
           "type": "string",
           "description": "Optionally calculate market quotes by CoinMarketCap ID instead of symbol."
+        }
+      ]
+    },
+    {
+      "operation_id": "getV5RealWorldAssetsQuotesHistorical",
+      "method": "GET",
+      "path": "/v5/real-world-assets/quotes/historical",
+      "summary": "Quotes Historical",
+      "tag": "Real World Assets",
+      "keyless": false,
+      "deprecated": false,
+      "params": [
+        {
+          "name": "rwa_id",
+          "type": "string",
+          "description": "One or more comma-separated RWA asset IDs."
+        },
+        {
+          "name": "rwa_slug",
+          "type": "string",
+          "description": "Alternatively pass RWA asset slugs."
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "description": "Alternatively pass RWA asset symbols / tickers."
+        },
+        {
+          "name": "time_start",
+          "type": "string",
+          "description": "Start of the window, inclusive, as a Unix timestamp or ISO 8601."
+        },
+        {
+          "name": "time_end",
+          "type": "string",
+          "description": "End of the window, inclusive, as a Unix timestamp or ISO 8601."
+        },
+        {
+          "name": "count",
+          "type": "integer",
+          "description": "Number of interval periods to return, from 1 to 10000."
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "enum": [
+            "hourly",
+            "daily",
+            "weekly",
+            "monthly",
+            "yearly",
+            "5m",
+            "10m",
+            "15m",
+            "30m",
+            "45m",
+            "1h",
+            "2h",
+            "3h",
+            "4h",
+            "6h",
+            "12h",
+            "1d",
+            "2d",
+            "3d",
+            "7d",
+            "14d",
+            "15d",
+            "30d",
+            "60d",
+            "90d",
+            "365d"
+          ],
+          "default": "daily",
+          "description": "Interval between data points."
+        },
+        {
+          "name": "convert",
+          "type": "string",
+          "description": "Calculate the tokenized values in up to 3 fiat or cryptocurrency currencies, as a comma-separated list of symbols."
+        },
+        {
+          "name": "convert_id",
+          "type": "string",
+          "description": "Calculate the tokenized values by CoinMarketCap ID instead of symbol, up to 3 IDs."
+        },
+        {
+          "name": "skip_invalid",
+          "type": "string",
+          "description": "Pass `true` to relax request validation rules."
         }
       ]
     },
