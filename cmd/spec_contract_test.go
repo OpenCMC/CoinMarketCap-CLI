@@ -27,6 +27,7 @@ func TestSpecContract_CommandEndpointsAreInSpec(t *testing.T) {
 var knownDeprecatedCommandEndpoints = []string{
 	"/v1/cryptocurrency/market-pairs/latest", // pairs
 	"/v1/cryptocurrency/quotes/historical",   // history
+	"/v2/cryptocurrency/ohlcv/historical",    // history --ohlc
 }
 
 func TestSpecContract_DeprecatedEndpointsAreTracked(t *testing.T) {
