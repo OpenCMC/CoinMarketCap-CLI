@@ -1,7 +1,7 @@
 {
   "source": "https://coinmarketcap.com/api/documentation/openapi.json",
   "spec_version": "3.0.3",
-  "sha256": "a8d5912d5c5dd83460eceb391059b4d473dc8af23729b83d1fed3609d8d67011",
+  "sha256": "177fcc4163e8c24ec461bb3c358139a4740125c3988b872982331e4e8a1632ae",
   "operations": [
     {
       "operation_id": "getV1AltcoinSeasonIndexHistorical",
@@ -4516,7 +4516,6 @@
         {
           "name": "count",
           "type": "integer",
-          "default": "10",
           "description": "Number of candle periods to return, from 1 to 10000."
         },
         {
